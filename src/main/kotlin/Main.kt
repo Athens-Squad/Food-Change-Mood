@@ -1,5 +1,13 @@
 package com.thechance
 
+import com.thechance.di.appModule
+import com.thechance.di.useCasesModule
+import org.koin.core.context.startKoin
+
 fun main() {
-    println("Hello World!")
+
+    startKoin {
+        modules(appModule, useCasesModule)
+    }
+
 }
