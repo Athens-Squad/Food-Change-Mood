@@ -7,24 +7,24 @@ import java.text.SimpleDateFormat
 class MealsFileParser(private val dateFormat: SimpleDateFormat) {
 
     fun parseLine(line: String): Meal? {
-        val mealFields = parseCsvLineToMealFields(line)
+        val mealFields = splitCsvLine(line)
         return try {
             Meal(
-                id = mealFields[1].toLong(),
-                name = mealFields[0],
-                minutes = mealFields[2].toInt(),
-                contributorId = mealFields[3].toLong(),
-                submitted = dateFormat.parse(mealFields[4]),
+                name = mealFields[0].trim(),
+                id = mealFields[1].trim().toInt(),
+                minutes = mealFields[2].trim().toInt(),
+                contributorId = mealFields[3].trim().toInt(),
+                submitted = mealFields[4].trim(),
                 tags = parseList(mealFields[5]),
                 nutritionFacts = parseNutritionFacts(mealFields[6]),
-                stepsNumber = mealFields[7].toInt(),
+                numberOfSteps = mealFields[7].trim().toInt(),
                 steps = parseList(mealFields[8]),
-                description = mealFields[9],
+                description = mealFields[9].trim(),
                 ingredients = parseList(mealFields[10]),
-                ingredientsNumber = mealFields[11].toInt()
+                numberOfIngredients = mealFields[11].trim().toInt()
             )
         } catch (e: Exception) {
-            println(e.message)
+            //println(e.message)
             null
         }
     }
@@ -33,7 +33,10 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         return listOfStrings
             .removePrefix("['")
             .removeSuffix("']")
+            .trim()  // Remove surrounding whitespace
             .split("', '")
+            .map { it.trim().removeSurrounding("'") }  // Remove any surrounding quotes around individual items
+            .filter { it.isNotEmpty() }
     }
 
     private fun parseNutritionFacts(listOfNutritionFacts: String): NutritionFacts { //takes list of nutrition facts as a string and parse it to a NutritionFacts instance
@@ -52,21 +55,23 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         )
     }
 
-    private fun parseCsvLineToMealFields(line: String): List<String> {
+    private fun splitCsvLine(line: String): List<String> {
         val fields = mutableListOf<String>()
         var current = ""
         var inDoubleQuotes = false
 
+
         var i = 0
         while (i < line.length) {
             val char = line[i]
+            val prev = line[if (i != 0) i-1 else 0]
             when {
                 char == '"' -> {
                     inDoubleQuotes = !inDoubleQuotes
                 }
 
                 char == ',' && !inDoubleQuotes -> {
-                    fields.add(current)
+                    fields.add(current.trim())
                     current = ""
                 }
 
@@ -76,7 +81,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
             }
             i++
         }
-        fields.add(current)
+        fields.add(current.trim())
         return fields
     }
 }

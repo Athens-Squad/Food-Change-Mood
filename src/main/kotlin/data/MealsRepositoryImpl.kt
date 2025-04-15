@@ -11,7 +11,10 @@ class MealsRepositoryImpl(
         val lines = reader.readFileLines()
         val meals = mutableListOf<Meal?>()
         lines.forEach {
-            meals.add(parser.parseLine(it))
+            if (parser.parseLine(it) != null) {
+                meals.add(parser.parseLine(it))
+            }
+
         }
         return meals
     }
