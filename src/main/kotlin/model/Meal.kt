@@ -3,16 +3,17 @@ package com.thechance.model
 import java.util.Date
 
 data class Meal(
-    val id: Long,
     val name: String,
+    val id: Int,
     val minutes: Int,
-    val contributorId: Long,
-    val submitted: Date,
+    val contributorId: Int,
+    val submitted: String,
     val tags: List<String>,
     val nutritionFacts: NutritionFacts,
-    val stepsNumber: Int,
+    val numberOfSteps: Int,
     val steps: List<String>,
-    val description: String?,
+    val description: String,
     val ingredients: List<String>,
-    val ingredientsNumber: Int
+    val numberOfIngredients: Int
 )
+
