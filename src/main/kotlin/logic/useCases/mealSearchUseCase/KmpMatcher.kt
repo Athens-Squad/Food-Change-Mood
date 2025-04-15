@@ -1,6 +1,6 @@
 package com.thechance.logic.useCases.mealSearchUseCase
 
-class KMPMatcher(private val pattern: String) {
+class KmpMatcher(private val pattern: String) {
     private val lps: IntArray = buildLPS()
 
     private fun buildLPS(): IntArray {
@@ -22,5 +22,22 @@ class KMPMatcher(private val pattern: String) {
             }
         }
         return lps
+    }
+
+    fun search(text: String): Boolean {
+        var i = 0
+        var j = 0
+        while (i < text.length) {
+            when {
+                pattern[j] == text[i] -> {
+                    i++
+                    j++
+                }
+                j != 0 -> j = lps[j - 1]
+                else -> i++
+            }
+            if (j == pattern.length) return true
+        }
+        return false
     }
 }
