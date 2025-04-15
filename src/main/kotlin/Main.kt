@@ -3,6 +3,7 @@ package com.thechance
 import com.thechance.di.appModule
 import com.thechance.di.useCasesModule
 import com.thechance.logic.MealsRepository
+import com.thechance.logic.useCases.GetSeaFoodMealsSortedByProteinContent
 import com.thechance.logic.useCases.SoThinUseCase
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
@@ -18,7 +19,7 @@ fun main() {
     println(numberOfMeals)
     println("percentage of null meals is : ${(numberOfNullMeals.toDouble() / numberOfMeals) * 100} %")*/
 
-    val soThinUseCase = getKoin().get<SoThinUseCase>()
-    println(soThinUseCase.getPlus700Meal())
+    val getSeaFoodMealsSortedByProteinContent = getKoin().get<GetSeaFoodMealsSortedByProteinContent>()
+    println(getSeaFoodMealsSortedByProteinContent.getSeaFoodMealsSortedByProteinContent().take(50))
 
 }
