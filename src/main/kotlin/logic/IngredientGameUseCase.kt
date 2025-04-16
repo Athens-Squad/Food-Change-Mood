@@ -8,22 +8,32 @@ class IngredientGameUseCase(private val mealsRepository: MealsRepository) {
 
     private var correctAnswers = 0
     private lateinit var correctIngredient: String
+    val meals = mealsRepository.getAllMeals().filterNotNull().filter {
+        it.ingredients.isNotEmpty()
+    }.shuffled().toMutableList()
+
+
+    private val allIngredients: Set<String> = mealsRepository.getAllMeals()
+        .filterNotNull()
+        .flatMap { it.ingredients }
+        .toSet()
 
 
     fun guessIngredient(): Triple<String, List<String>, String>? {
 
-
-        val meals = mealsRepository.getAllMeals().filterNotNull().filter {
-            it.ingredients.isNotEmpty()
-        }.shuffled().toMutableList()
-
         if (isGameOver()) return null
         val meal = meals.removeFirst()
+
         correctIngredient = meal.ingredients.random()
         val otherMeals = meals.shuffled().take(2)
-        val wrongIngredient = otherMeals.mapNotNull { it.ingredients.randomOrNull() }
 
-        val options = (listOf(correctIngredient) + wrongIngredient).shuffled()
+        ///////////
+        val wrongIngredient = otherMeals
+            .flatMap {it.ingredients }
+            .filter { it !in meal.ingredients}
+            .shuffled().take(2)
+
+       val options = (listOf(correctIngredient) + wrongIngredient).shuffled()
         return Triple(meal.name, options, correctIngredient)
 
 
@@ -35,6 +45,7 @@ class IngredientGameUseCase(private val mealsRepository: MealsRepository) {
             score += SCORE_EVERY_WIN
             correctAnswers++
         }
+
         return isCorrect
     }
 
@@ -43,7 +54,7 @@ class IngredientGameUseCase(private val mealsRepository: MealsRepository) {
 
     companion object {
         const val MAX_CORRECT_ANSWER = 15
-        const val SCORE_EVERY_WIN = 100
+        const val SCORE_EVERY_WIN = 1000
     }
 
 }
