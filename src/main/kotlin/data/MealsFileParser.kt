@@ -24,7 +24,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
                 numberOfIngredients = mealFields[11].trim().toInt()
             )
         } catch (e: Exception) {
-            //println(e.message)
+            println(e.message)
             null
         }
     }
@@ -64,7 +64,6 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         var i = 0
         while (i < line.length) {
             val char = line[i]
-            val prev = line[if (i != 0) i-1 else 0]
             when {
                 char == '"' -> {
                     inDoubleQuotes = !inDoubleQuotes

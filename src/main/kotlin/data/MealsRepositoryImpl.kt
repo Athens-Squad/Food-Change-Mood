@@ -8,14 +8,7 @@ class MealsRepositoryImpl(
     private val reader: MealsFileReader
 ): MealsRepository {
     override fun getAllMeals(): List<Meal?> {
-        val lines = reader.readFileLines()
-        val meals = mutableListOf<Meal?>()
-        lines.forEach {
-            if (parser.parseLine(it) != null) {
-                meals.add(parser.parseLine(it))
-            }
-
-        }
-        return meals
+        val records = reader.readMealRecords()
+        return records.map { parser.parseLine(it) }
     }
 }
