@@ -13,18 +13,34 @@ fun main() {
     startKoin {
         modules(appModule, useCasesModule)
     }
-    val repo: MealsRepository = getKoin().get()
-    val numberOfMeals = repo.getAllMeals().size
-    val numberOfNullMeals = repo.getAllMeals().filter { it == null }.size
-    println(numberOfMeals)
-    println("percentage of null meals is : ${(numberOfNullMeals.toDouble() / numberOfMeals) * 100} %")
-
-   val getSeaFoodMealsSortedByProteinContent = getKoin().get<GetSeaFoodMealsSortedByProteinContent>()
-    println(getSeaFoodMealsSortedByProteinContent.getSeaFoodMealsSortedByProteinContent().take(50))
-
 
 
     val ingredientGameUseCase= getKoin().get<IngredientGameUseCase>()
-      ingredientGameUseCase.guessIngredient()
-          .let { println(it) }
+
+       while (!ingredientGameUseCase.isGameOver()){
+
+           val (mealName, options)=ingredientGameUseCase.guessIngredient()?:break
+
+
+           println("Meal: $mealName")
+           println("Choose the correct ingredient:")
+           options.forEachIndexed { index, option ->
+               println("${index + 1}. $option")
+           }
+           print("Your choice (1-${options.size}): ")
+           val userChoice = readln().toIntOrNull()
+           val selected = options.getOrNull(userChoice?.minus(1) ?: -1)
+
+
+           if (selected == null || !ingredientGameUseCase.submitAnswer(selected)) {
+               println("Incorrect. Game over!")
+               break
+           } else {
+               println("Correct!")
+           }
+           println("Final Score: ${ingredientGameUseCase.getScore()}")
+
+       }
+       println("Total score = ${ingredientGameUseCase.getScore()}")
+
 }
