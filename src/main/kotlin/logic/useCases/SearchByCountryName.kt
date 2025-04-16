@@ -12,13 +12,14 @@ class SearchByCountryName(private val repository: MealsRepository) {
         return repository.getAllMeals()
             .filterNotNull()
             .filter { meal ->
+                meal.name.contains(nationality)||
                 meal.tags.any {tag ->
                     tag.lowercase() == lowerCaseCountry
                     ||tag.lowercase() == nationality
                 }
                     ||meal.description.contains(lowerCaseCountry)
                     ||meal.description.contains(nationality)
-                    ||meal.name.contains(nationality)
+
             }
             .shuffled()
             .take(20)
