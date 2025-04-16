@@ -9,12 +9,13 @@ class GetSeaFoodMealsSortedByProteinContent(private val repository: MealsReposit
 
     fun getSeaFoodMealsSortedByProteinContent(): List<ProteinMeal> {
         return repository.getAllMeals()
-            .filter { it?.isSeaFood() == true }
-            .sortedByDescending { it!!.nutritionFacts.protein }
+            .filterNotNull()
+            .filter { it.isSeaFood() }
+            .sortedByDescending { it.nutritionFacts.protein }
             .mapIndexed { index, meal ->
                 ProteinMeal(
                     rank = index + 1,
-                    name = meal!!.name,
+                    name = meal.name,
                     proteinAmount = meal.nutritionFacts.protein
                 )
             }
