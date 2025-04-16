@@ -13,13 +13,10 @@ fun main() {
     startKoin {
         modules(appModule, useCasesModule)
     }
-    /*val repo: MealsRepository = getKoin().get()
+    val repo: MealsRepository = getKoin().get()
     val numberOfMeals = repo.getAllMeals().size
     val numberOfNullMeals = repo.getAllMeals().filter { it == null }.size
     println(numberOfMeals)
-    println("percentage of null meals is : ${(numberOfNullMeals.toDouble() / numberOfMeals) * 100} %")*/
-
-    val getSeaFoodMealsSortedByProteinContent = getKoin().get<GetSeaFoodMealsSortedByProteinContent>()
-    println(getSeaFoodMealsSortedByProteinContent.getSeaFoodMealsSortedByProteinContent().take(50))
+    println("percentage of null meals is : ${(numberOfNullMeals.toDouble() / numberOfMeals) * 100} %")
 
 }
