@@ -1,5 +1,6 @@
 package com.thechance.di
 
+import com.thechance.logic.useCases.*
 import com.thechance.logic.useCases.GetIraqiMealsUseCase
 import com.thechance.logic.useCases.GetRandomSweetWithNoEggsUseCase
 import com.thechance.logic.useCases.GetSeaFoodMealsSortedByProteinContent
@@ -18,5 +19,6 @@ val useCasesModule = module {
     single { SuggestFoodUseCase(get()) }
     single { SearchByCountryName(get()) }
     single { GetRandomSweetWithNoEggsUseCase(get()) }
+    single { GymHelperUseCase(get())}
 
 }
