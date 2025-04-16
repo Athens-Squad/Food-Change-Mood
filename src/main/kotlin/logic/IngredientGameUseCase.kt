@@ -6,71 +6,46 @@ class IngredientGameUseCase(private val mealsRepository: MealsRepository) {
 
     private var score = 0
 
-
-    fun guessIngredient() {
-        val meals = mealsRepository.getAllMeals()
-            .filter { it?.ingredients?.isNotEmpty() == true }
-            .filterNotNull()
+    private var correctAnswers = 0
+    private lateinit var correctIngredient: String
 
 
-        while (score < MAX_CORRECT_ANSWER * SCORE_EVERY_WIN) {
-            val meal = meals.random()
-            val correctIngredient = meal.ingredients.random()
-            val options = getOptions(meals, correctIngredient)
-
-            with(meal) {
-                println("Meal Name: $name")
-                options.forEach{ ingredient ->
-                    println(" $ingredient")
-                }
-            }
-            val selected = readUserChoice(options)
-            selected?.let {
-                if (it.equals(correctIngredient, ignoreCase = true)) {
-                    score += SCORE_EVERY_WIN
-                    println("Correct choice: $score")
-                } else {
-                    println("Wrong choice! Correct Ingredient was: $correctIngredient and your score $score")
-                    return
-                }
-            } ?: println("Invalid input.Game Over.")
-            println("final score $score")
+    fun guessIngredient(): Triple<String, List<String>, String>? {
 
 
+        val meals = mealsRepository.getAllMeals().filterNotNull().filter {
+            it.ingredients.isNotEmpty()
+        }.shuffled().toMutableList()
 
+        if (isGameOver()) return null
+        val meal = meals.removeFirst()
+        correctIngredient = meal.ingredients.random()
+        val otherMeals = meals.shuffled().take(2)
+        val wrongIngredient = otherMeals.mapNotNull { it.ingredients.randomOrNull() }
+
+        val options = (listOf(correctIngredient) + wrongIngredient).shuffled()
+        return Triple(meal.name, options, correctIngredient)
+
+
+    }
+
+    fun submitAnswer(selectedIngredient: String): Boolean {
+        val isCorrect = selectedIngredient == correctIngredient
+        if (isCorrect) {
+            score += SCORE_EVERY_WIN
+            correctAnswers++
         }
+        return isCorrect
     }
 
-    private fun getOptions(meals: List<Meal>, correct: String): List<String> {
-        val allIngredients = mutableListOf<String>()
+    fun isGameOver(): Boolean = correctAnswers >= MAX_CORRECT_ANSWER
+    fun getScore(): Int = score
 
-        meals.forEach { meal ->
-            allIngredients.addAll(meal.ingredients)
-        }
-
-        return allIngredients
-            .distinct()
-            .filterNot { it.equals(correct, ignoreCase = true) }
-            .let { filtered ->
-                mutableListOf<String>().apply {
-                    addAll(filtered.sortedBy { it.length }.take(2))
-                    add(correct)
-                    sortBy { it.length }
-                }
-            }
+    companion object {
+        const val MAX_CORRECT_ANSWER = 15
+        const val SCORE_EVERY_WIN = 100
     }
 
-    private fun readUserChoice(options: List<String>): String? {
-        print("Your choice (1 of ${options.size}): ")
-        return readLine()
-            ?.toIntOrNull()
-            ?.let { options.getOrNull(it - 1) }
-    }
-
-
-companion object{
-    const val MAX_CORRECT_ANSWER=15
-    const val SCORE_EVERY_WIN=100
 }
 
-}
+
