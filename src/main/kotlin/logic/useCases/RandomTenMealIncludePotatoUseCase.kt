@@ -3,7 +3,7 @@ package com.thechance.logic.useCases
 import com.thechance.logic.MealsRepository
 import com.thechance.model.Meal
 
-class RandomTenMealIncludePotatoUseCase(val mealsRepository: MealsRepository) {
+class GetRandomTenMealIncludePotatoUseCase(val mealsRepository: MealsRepository) {
 
     fun suggestPotatoMeals(numberOfMeal: Int = 10): List<Meal> {
         return mealsRepository.getAllMeals()
