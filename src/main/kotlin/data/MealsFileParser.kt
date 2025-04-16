@@ -25,7 +25,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
                 ingredients = parseList(mealFields[MealIndexToField.ingredients]),
                 numberOfIngredients = mealFields[MealIndexToField.numberOfIngredients].toIntOrThrow()
             )
-        } catch (e: MealsDataException) {
+        } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.InvalidMealRecordFormatException()
         }
     }
@@ -39,7 +39,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
                 .split("', '")
                 .map { it.trim().removeSurrounding("'") }  // Remove any surrounding quotes around individual items
                 .filter { it.isNotEmpty() }
-        } catch (e: MealsDataException) {
+        } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.InvalidListFieldException()
         }
     }
@@ -59,7 +59,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
                 saturatedFat = list[5],
                 carbohydrates = list[6]
             )
-        } catch (e: MealsDataException) {
+        } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.InvalidNutritionFactsException()
         }
     }
@@ -91,7 +91,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
                 i++
             }
             fields.add(current.trim())
-        } catch (e: MealsDataException) {
+        } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.InvalidMealRecordFormatException()
         }
         return fields.map { it.trim() }

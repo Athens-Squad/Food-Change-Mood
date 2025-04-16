@@ -13,8 +13,8 @@ class MealsRepositoryImpl(
     override fun getAllMeals(): List<Meal?> {
         return try {
             reader.readMealRecords().map { parser.parseLine(it) }
-        } catch (e: MealsDataException) {
-            logger.warning(e.message)
+        } catch (mealsDataException: MealsDataException) {
+            logger.warning(mealsDataException.message)
             listOf<Meal>()
         }
     }

@@ -24,7 +24,7 @@ class MealsFileReader(private val file: File) {
                     }
                 }
             }
-        } catch (e: MealsDataException) {
+        } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.MealsFileReadingException()
         }
 
