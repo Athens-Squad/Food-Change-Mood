@@ -1,6 +1,7 @@
 package com.thechance.data
 
 import com.thechance.model.Meal
+import com.thechance.model.MealIndexToField
 import com.thechance.model.NutritionFacts
 import java.text.SimpleDateFormat
 
@@ -11,18 +12,18 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         if (mealFields.size != 12) throw MealsDataException.InvalidFieldsCountException(mealFields.size)
         return try {
             Meal(
-                name = mealFields[0].trim(),
-                id = mealFields[1].trim().toIntOrThrow(),
-                minutes = mealFields[2].trim().toIntOrThrow(),
-                contributorId = mealFields[3].trim().toIntOrThrow(),
-                submitted = dateFormat.parse(mealFields[4].trim()),
-                tags = parseList(mealFields[5]),
-                nutritionFacts = parseNutritionFacts(mealFields[6]),
-                numberOfSteps = mealFields[7].trim().toIntOrThrow(),
-                steps = parseList(mealFields[8]),
-                description = mealFields[9].trim(),
-                ingredients = parseList(mealFields[10]),
-                numberOfIngredients = mealFields[11].trim().toIntOrThrow()
+                name = mealFields[MealIndexToField.name],
+                id = mealFields[MealIndexToField.id].toIntOrThrow(),
+                minutes = mealFields[MealIndexToField.minutes].toIntOrThrow(),
+                contributorId = mealFields[MealIndexToField.contributorId].toIntOrThrow(),
+                submitted = dateFormat.parse(mealFields[MealIndexToField.submitted]),
+                tags = parseList(mealFields[MealIndexToField.tags]),
+                nutritionFacts = parseNutritionFacts(mealFields[MealIndexToField.nutritionFacts]),
+                numberOfSteps = mealFields[MealIndexToField.numberOfSteps].toIntOrThrow(),
+                steps = parseList(mealFields[MealIndexToField.steps]),
+                description = mealFields[MealIndexToField.description],
+                ingredients = parseList(mealFields[MealIndexToField.ingredients]),
+                numberOfIngredients = mealFields[MealIndexToField.numberOfIngredients].toIntOrThrow()
             )
         } catch (e: MealsDataException) {
             throw MealsDataException.InvalidMealRecordFormatException()
@@ -93,10 +94,10 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         } catch (e: MealsDataException) {
             throw MealsDataException.InvalidMealRecordFormatException()
         }
-        return fields
+        return fields.map { it.trim() }
     }
 
     private fun String.toIntOrThrow(): Int {
-        return this.toIntOrNull() ?: throw MealsDataException.InvalidNumericFormatException(this)
+        return this.trim().toIntOrNull() ?: throw MealsDataException.InvalidNumericFormatException(this)
     }
 }
