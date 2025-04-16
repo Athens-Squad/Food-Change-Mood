@@ -5,11 +5,16 @@ import com.thechance.model.Meal
 
 class RandomTenMealIncludePotatoUseCase(val mealsRepository: MealsRepository) {
 
-    fun suggestPotatoMeals(limit: Int = 10): List<Meal> {
+    fun suggestPotatoMeals(numberOfMeal: Int = 10): List<Meal> {
         return mealsRepository.getAllMeals()
             .filterNotNull()
             .filter { it.ingredients.any { ingredient -> ingredient.contains("potato", ignoreCase = true) } }
-            .toMutableList()
+            .shuffled().take(numberOfMeal)
+
+
+
+
+            /*.toMutableList()
             .let { meals ->
                 mutableListOf<Meal>().apply {
                     val size = minOf(limit, meals.size)
@@ -21,7 +26,7 @@ class RandomTenMealIncludePotatoUseCase(val mealsRepository: MealsRepository) {
                         }
                     }
                 }
-            }
+            }*/
     }}
 
 
