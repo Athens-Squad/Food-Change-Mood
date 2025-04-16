@@ -2,6 +2,7 @@ package com.thechance.logic.useCases
 
 import com.thechance.logic.MealsRepository
 import com.thechance.model.Meal
+import model.MealGameResult
 
 class MealPrepTimeGuessGameUseCase(
     private val mealsRepositoryImpl: MealsRepository
@@ -45,13 +46,4 @@ class MealPrepTimeGuessGameUseCase(
         const val MAXIMUM_NUMBER_OF_LOSES = 2
         const val INITIAL_LOSES_COUNT = 0
     }
-}
-
-// Results that game logic can produce
-enum class MealGameResult {
-    TOO_LOW,
-    TOO_HIGH,
-    CORRECT,
-    WON,
-    LOST
 }
