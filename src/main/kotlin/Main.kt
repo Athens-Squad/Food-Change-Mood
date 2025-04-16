@@ -2,7 +2,10 @@ package com.thechance
 
 import com.thechance.di.appModule
 import com.thechance.di.useCasesModule
-import com.thechance.logic.useCases.GymHelperUseCase
+import com.thechance.logic.MealsRepository
+import com.thechance.logic.useCases.GetSeaFoodMealsSortedByProteinContent
+import com.thechance.logic.useCases.SearchByCountryName
+import com.thechance.logic.useCases.SoThinUseCase
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -15,13 +18,12 @@ fun main() {
     val numberOfMeals = repo.getAllMeals().size
     val numberOfNullMeals = repo.getAllMeals().filter { it == null }.size
     println(numberOfMeals)
-    println("percentage of null meals is : ${(numberOfNullMeals.toDouble() / numberOfMeals) * 100} %")*
-     */
+    println("percentage of null meals is : ${(numberOfNullMeals.toDouble() / numberOfMeals) * 100} %")*/
+    val instance : SearchByCountryName = getKoin().get()
 
-    val instance : GymHelperUseCase = getKoin().get()
-
-    instance.getMealsByCaloriesAndProtein(calories = 51, protein = 20).forEach{
+    instance.getMealsByCountry(country = "united states").forEach{
         println(it)
     }
+
 
 }
