@@ -19,6 +19,4 @@ fun main() {
     val numberOfNullMeals = repo.getAllMeals().filter { it == null }.size
     println(numberOfMeals)
     println("percentage of null meals is : ${(numberOfNullMeals.toDouble() / numberOfMeals) * 100} %")
-
-
 }
