@@ -13,17 +13,17 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         return try {
             Meal(
                 name = mealFields[MealIndexToField.name],
-                id = mealFields[MealIndexToField.id].toIntOrThrow(),
-                minutes = mealFields[MealIndexToField.minutes].toIntOrThrow(),
-                contributorId = mealFields[MealIndexToField.contributorId].toIntOrThrow(),
-                submitted = dateFormat.parse(mealFields[MealIndexToField.submitted]),
-                tags = parseList(mealFields[MealIndexToField.tags]),
-                nutritionFacts = parseNutritionFacts(mealFields[MealIndexToField.nutritionFacts]),
-                numberOfSteps = mealFields[MealIndexToField.numberOfSteps].toIntOrThrow(),
-                steps = parseList(mealFields[MealIndexToField.steps]),
-                description = mealFields[MealIndexToField.description],
-                ingredients = parseList(mealFields[MealIndexToField.ingredients]),
-                numberOfIngredients = mealFields[MealIndexToField.numberOfIngredients].toIntOrThrow()
+                id = mealFields[MealIndexToField.ID].toIntOrThrow(),
+                minutes = mealFields[MealIndexToField.MINUTES].toIntOrThrow(),
+                contributorId = mealFields[MealIndexToField.CONTRIBUTOR_ID].toIntOrThrow(),
+                submitted = dateFormat.parse(mealFields[MealIndexToField.SUBMITTED]),
+                tags = parseList(mealFields[MealIndexToField.TAGS]),
+                nutritionFacts = parseNutritionFacts(mealFields[MealIndexToField.NUTRITION_FACTS]),
+                numberOfSteps = mealFields[MealIndexToField.NUMBER_OF_STEPS].toIntOrThrow(),
+                steps = parseList(mealFields[MealIndexToField.STEPS]),
+                description = mealFields[MealIndexToField.DESCRIPTION],
+                ingredients = parseList(mealFields[MealIndexToField.INGREDIENTS]),
+                numberOfIngredients = mealFields[MealIndexToField.NUMBER_OF_INGREDIENTS].toIntOrThrow()
             )
         } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.InvalidMealRecordFormatException()
