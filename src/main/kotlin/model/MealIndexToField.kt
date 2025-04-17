@@ -1,7 +1,7 @@
 package com.thechance.model
 
 object MealIndexToField {
-    const val name = 0
+    const val NAME = 0
     const val ID = 1
     const val MINUTES = 2
     const val CONTRIBUTOR_ID = 3

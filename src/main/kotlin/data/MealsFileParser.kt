@@ -3,6 +3,7 @@ package com.thechance.data
 import com.thechance.model.Meal
 import com.thechance.model.MealIndexToField
 import com.thechance.model.NutritionFacts
+import com.thechance.model.NutritionFactsIndexToField
 import java.text.SimpleDateFormat
 
 class MealsFileParser(private val dateFormat: SimpleDateFormat) {
@@ -12,7 +13,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         if (mealFields.size != 12) throw MealsDataException.InvalidFieldsCountException(mealFields.size)
         return try {
             Meal(
-                name = mealFields[MealIndexToField.name],
+                name = mealFields[MealIndexToField.NAME],
                 id = mealFields[MealIndexToField.ID].toIntOrThrow(),
                 minutes = mealFields[MealIndexToField.MINUTES].toIntOrThrow(),
                 contributorId = mealFields[MealIndexToField.CONTRIBUTOR_ID].toIntOrThrow(),
@@ -51,13 +52,13 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
             .split(", ").map { it.toFloatOrNull() ?: throw MealsDataException.InvalidNumericFormatException(it) }
         return try {
             NutritionFacts(
-                calories = list[0],
-                totalFat = list[1],
-                sugar = list[2],
-                sodium = list[3],
-                protein = list[4],
-                saturatedFat = list[5],
-                carbohydrates = list[6]
+                calories = list[NutritionFactsIndexToField.CALORIES],
+                totalFat = list[NutritionFactsIndexToField.TOTAL_FAT],
+                sugar = list[NutritionFactsIndexToField.SUGAR],
+                sodium = list[NutritionFactsIndexToField.SODIUM],
+                protein = list[NutritionFactsIndexToField.PROTEIN],
+                saturatedFat = list[NutritionFactsIndexToField.SATURATED_FACTS],
+                carbohydrates = list[NutritionFactsIndexToField.CARBOHYDRATES]
             )
         } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.InvalidNutritionFactsException()
