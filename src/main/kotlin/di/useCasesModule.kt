@@ -27,8 +27,8 @@ val useCasesModule = module {
     single { SearchByCountryName(get()) }
     single { GetRandomSweetWithNoEggsUseCase(get()) }
     single { GymHelperUseCase(get())}
+    single { KetoDietMealUseCase(get()) }
     single { IngredientGameUseCase(get())  }
     single { GetRandomTenMealIncludePotatoUseCase(get()) }
-
     single { GetItalianMealsForLargeGroupsUseCase(get()) }
 }
