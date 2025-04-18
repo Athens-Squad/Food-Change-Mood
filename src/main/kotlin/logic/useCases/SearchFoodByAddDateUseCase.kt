@@ -1,6 +1,7 @@
 package com.thechance.logic.useCases
 
 import com.thechance.logic.MealsRepository
+import com.thechance.logic.NoMealsWithGivenDateException
 import com.thechance.model.Meal
 import com.thechance.model.NameDateMeal
 import java.util.*
@@ -29,4 +30,3 @@ class SearchFoodByAddDate(private val repo: MealsRepository) {
 }
 
 
-class NoMealsWithGivenDateException(date: Date): Exception("No meals found at this date : $date")
