@@ -16,4 +16,3 @@ data class Meal(
     val ingredients: List<String>,
     val numberOfIngredients: Int
 )
-
