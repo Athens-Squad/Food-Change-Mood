@@ -18,5 +18,20 @@ val appModule = module {
 
     single<MealsRepository> { MealsRepositoryImpl(get(), get()) }
 
-    single { FoodChangeMoodCLI() }
+    single {
+        FoodChangeMoodCLI(
+            getHealthyMealsUseCase = get(),
+            searchByCountryName = get(),
+            getIraqiMealsUseCase = get(),
+            suggestFoodUseCase = get(),
+            guessGameUseCase = get(),
+            getRandomSweetWithNoEggs = get(),
+            gymHelperUseCase = get(),
+            soThinUseCase = get(),
+            getSeaFoodMealsSortedByProteinContent = get(),
+            ingredientGameUseCase = get(),
+            getRandomTenMealIncludePotatoUseCase = get()
+
+        )
+    }
 }
