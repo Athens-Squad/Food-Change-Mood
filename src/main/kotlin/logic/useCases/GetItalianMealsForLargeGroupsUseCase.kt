@@ -19,16 +19,16 @@ class SuggestItalianMealsForLargeGroupsUseCase(
     }
 
     private fun checkItalianMealsInTag(meal: Meal): Boolean {
-        return meal.tags.toString().contains(ITALI, ignoreCase = true)
+        return meal.tags.toString().contains(ITALIAN, ignoreCase = true)
     }
 
     private fun checkItalianMealsInDescription(meal: Meal): Boolean {
-        return meal.description?.contains(ITALI, ignoreCase = true) ?: false
+        return meal.description.contains(ITALIAN, ignoreCase = true)
     }
 
     companion object {
         const val LARGE_GROUPS = "for-large-groups"
-        const val ITALI = "itali"
+        const val ITALIAN = "italian"
     }
 }
 
