@@ -154,7 +154,7 @@ class FoodChangeMoodCLI(
         val iraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
         println("Iraqi Meals:")
         if (iraqiMeals.isNotEmpty()) {
-            iraqiMeals.forEach { println(it?.name) }
+            iraqiMeals.forEach { println(it) }
         } else {
             println("No Iraqi meals found.")
         }
@@ -164,7 +164,7 @@ class FoodChangeMoodCLI(
         val easyMeals = suggestFoodUseCase.getMeals()
         println("Suggested Easy Meals:")
         if (easyMeals.isNotEmpty()) {
-            easyMeals.forEach { println(it.name) }
+            easyMeals.forEach { println(it) }
         } else {
             println("No meals available.")
         }
@@ -214,7 +214,7 @@ class FoodChangeMoodCLI(
         val meals = gymHelperUseCase.getMealsByCaloriesAndProtein(calories, protein)
         println("Meals matching your criteria (Calories: $calories, Protein: $protein):")
         if (meals.isNotEmpty()) {
-            meals.forEach { println(it.name) }
+            meals.forEach { println(it) }
         } else {
             println("No meals found matching those criteria.")
         }
@@ -267,6 +267,7 @@ class FoodChangeMoodCLI(
                 println("✅ Correct!")
             } else {
                 println("❌ Wrong! The correct answer was: $correct")
+                return
             }
 
             println("Current Score: ${ingredientGameUseCase.getScore()}")
@@ -280,7 +281,7 @@ class FoodChangeMoodCLI(
         println("Here are 10 meals that include potatoes:")
         if (meals.isNotEmpty()) {
             meals.forEachIndexed { index, meal ->
-                println("${index + 1}: ${meal.name}")
+                println("${index + 1}: $meal")
             }
         } else {
             println("No potato meals found.")
