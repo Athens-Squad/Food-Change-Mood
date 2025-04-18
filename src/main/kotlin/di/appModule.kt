@@ -28,7 +28,10 @@ val appModule = module {
             getRandomSweetWithNoEggs = get(),
             gymHelperUseCase = get(),
             soThinUseCase = get(),
-            getSeaFoodMealsSortedByProteinContent = get()
+            getSeaFoodMealsSortedByProteinContent = get(),
+            ingredientGameUseCase = get(),
+            getRandomTenMealIncludePotatoUseCase = get()
+
         )
     }
 }

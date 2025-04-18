@@ -1,5 +1,6 @@
 package com.thechance.presentation
 
+import com.thechance.logic.IngredientGameUseCase
 import com.thechance.logic.useCases.*
 import model.MealGameResult
 
@@ -12,7 +13,10 @@ class FoodChangeMoodCLI(
     private val getRandomSweetWithNoEggs: GetRandomSweetWithNoEggsUseCase,
     private val gymHelperUseCase: GymHelperUseCase,
     private val soThinUseCase: SoThinUseCase,
-    private val getSeaFoodMealsSortedByProteinContent: GetSeaFoodMealsSortedByProteinContent
+    private val getSeaFoodMealsSortedByProteinContent: GetSeaFoodMealsSortedByProteinContent,
+    private val ingredientGameUseCase: IngredientGameUseCase,
+    private val getRandomTenMealIncludePotatoUseCase: GetRandomTenMealIncludePotatoUseCase
+
 ) {
     fun start() {
         while (true) {
@@ -27,6 +31,8 @@ class FoodChangeMoodCLI(
             println("7: Gym Helper (Calories and Protein)")
             println("8: Suggest a Meal with More Than 700 Calories")
             println("9: List Seafood Meals Sorted by Protein Content")
+            println("10: Play Ingredient Guessing Game")
+            println("11: Suggest 10 Meals with Potatoes")
             println("0: Exit")
 
             when (readLine()?.toIntOrNull()) {
@@ -39,11 +45,12 @@ class FoodChangeMoodCLI(
                 7 -> gymHelper()
                 8 -> suggestSoThinMeal()
                 9 -> listSeaFoodMealsSortedByProtein()
+                10 -> startIngredientGame()
+                11 -> suggestPotatoMeals()
                 0 -> {
                     println("Exiting the app. Goodbye!")
                     return
                 }
-
                 else -> println("Invalid option. Please choose again.")
             }
         }
@@ -153,4 +160,54 @@ class FoodChangeMoodCLI(
             println("No seafood meals found.")
         }
     }
+
+    private fun startIngredientGame() {
+        println("Welcome to the Ingredient Guessing Game!")
+        println("Guess the correct ingredient for each meal.")
+
+        while (!ingredientGameUseCase.isGameOver()) {
+            val question = ingredientGameUseCase.guessIngredient()
+            if (question == null) {
+                println("Game Over!")
+                break
+            }
+
+            val (mealName, options, correct) = question
+            println("Which of the following is an ingredient in: $mealName")
+            options.forEachIndexed { index, option ->
+                println("${index + 1}: $option")
+            }
+
+            val userChoice = readLine()?.toIntOrNull()
+            val selected = if (userChoice != null && userChoice in 1..options.size) {
+                options[userChoice - 1]
+            } else {
+                println("Invalid input. Skipping question.")
+                continue
+            }
+
+            if (ingredientGameUseCase.submitAnswer(selected)) {
+                println("✅ Correct!")
+            } else {
+                println("❌ Wrong! The correct answer was: $correct")
+            }
+
+            println("Current Score: ${ingredientGameUseCase.getScore()}")
+            println("------------------------------------------------")
+        }
+
+        println("🎉 Game finished! Your final score is ${ingredientGameUseCase.getScore()}")
+    }
+    private fun suggestPotatoMeals() {
+        val meals = getRandomTenMealIncludePotatoUseCase.suggestPotatoMeals()
+        println("Here are 10 meals that include potatoes:")
+        if (meals.isNotEmpty()) {
+            meals.forEachIndexed { index, meal ->
+                println("${index + 1}: ${meal.name}")
+            }
+        } else {
+            println("No potato meals found.")
+        }
+    }
+
 }
