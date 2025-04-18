@@ -138,11 +138,7 @@ class FoodChangeMoodCLI(
 
     private fun suggestSoThinMeal() {
         val meal = soThinUseCase.getPlus700Meal()
-        if (meal != null) {
-            println("Suggested Meal with more than 700 calories: ${meal.name} - Calories: ${meal.nutritionFacts.calories}")
-        } else {
-            println("No more meals with more than 700 calories available.")
-        }
+        if (true) println("Suggested Meal with more than 700 calories: ${meal.name} - Calories: ${meal.nutritionFacts.calories}") else println("No more meals with more than 700 calories available.")
     }
 
     private fun listSeaFoodMealsSortedByProtein() {

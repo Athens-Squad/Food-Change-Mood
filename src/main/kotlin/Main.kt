@@ -11,12 +11,8 @@ import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 
 fun main() {
-    // ✅ Start Koin first
-    startKoin {
-        modules(appModule, useCasesModule)
-    }
+    startKoin { modules(appModule, useCasesModule) }
 
-    // ✅ Now it's safe to get instances
     val getHealthyMealsUseCase = getKoin().get<com.thechance.logic.useCases.GetHealthyMealsUseCase>()
     val searchByCountryName = getKoin().get<SearchByCountryName>()
     val getIraqiMealsUseCase = getKoin().get<com.thechance.logic.useCases.GetIraqiMealsUseCase>()
@@ -27,7 +23,6 @@ fun main() {
     val soThinUseCase = getKoin().get<SoThinUseCase>()
     val getSeaFoodMealsSortedByProteinContent = getKoin().get<GetSeaFoodMealsSortedByProteinContent>()
 
-    // Run CLI
     val cli = FoodChangeMoodCLI(
         getHealthyMealsUseCase,
         searchByCountryName,
