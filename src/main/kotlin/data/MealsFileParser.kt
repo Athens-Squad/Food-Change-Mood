@@ -1,58 +1,68 @@
 package com.thechance.data
 
 import com.thechance.model.Meal
+import com.thechance.model.MealIndexToField
 import com.thechance.model.NutritionFacts
+import com.thechance.model.NutritionFactsIndexToField
 import java.text.SimpleDateFormat
 
 class MealsFileParser(private val dateFormat: SimpleDateFormat) {
 
     fun parseLine(line: String): Meal? {
         val mealFields = splitCsvLine(line)
+        if (mealFields.size != 12) throw MealsDataException.InvalidFieldsCountException(mealFields.size)
         return try {
             Meal(
-                name = mealFields[0].trim(),
-                id = mealFields[1].trim().toInt(),
-                minutes = mealFields[2].trim().toInt(),
-                contributorId = mealFields[3].trim().toInt(),
-                submitted = mealFields[4].trim(),
-                tags = parseList(mealFields[5]),
-                nutritionFacts = parseNutritionFacts(mealFields[6]),
-                numberOfSteps = mealFields[7].trim().toInt(),
-                steps = parseList(mealFields[8]),
-                description = mealFields[9].trim(),
-                ingredients = parseList(mealFields[10]),
-                numberOfIngredients = mealFields[11].trim().toInt()
+                name = mealFields[MealIndexToField.NAME],
+                id = mealFields[MealIndexToField.ID].toIntOrThrow(),
+                minutes = mealFields[MealIndexToField.MINUTES].toIntOrThrow(),
+                contributorId = mealFields[MealIndexToField.CONTRIBUTOR_ID].toIntOrThrow(),
+                submitted = dateFormat.parse(mealFields[MealIndexToField.SUBMITTED]),
+                tags = parseList(mealFields[MealIndexToField.TAGS]),
+                nutritionFacts = parseNutritionFacts(mealFields[MealIndexToField.NUTRITION_FACTS]),
+                numberOfSteps = mealFields[MealIndexToField.NUMBER_OF_STEPS].toIntOrThrow(),
+                steps = parseList(mealFields[MealIndexToField.STEPS]),
+                description = mealFields[MealIndexToField.DESCRIPTION],
+                ingredients = parseList(mealFields[MealIndexToField.INGREDIENTS]),
+                numberOfIngredients = mealFields[MealIndexToField.NUMBER_OF_INGREDIENTS].toIntOrThrow()
             )
-        } catch (e: Exception) {
-            println(e.message)
-            null
+        } catch (mealsDataException: MealsDataException) {
+            throw MealsDataException.InvalidMealRecordFormatException()
         }
     }
 
     private fun parseList(listOfStrings: String): List<String> { // takes the list as string and parse it to list of strings
-        return listOfStrings
-            .removePrefix("['")
-            .removeSuffix("']")
-            .trim()  // Remove surrounding whitespace
-            .split("', '")
-            .map { it.trim().removeSurrounding("'") }  // Remove any surrounding quotes around individual items
-            .filter { it.isNotEmpty() }
+        return try {
+            listOfStrings
+                .removePrefix("['")
+                .removeSuffix("']")
+                .trim()  // Remove surrounding whitespace
+                .split("', '")
+                .map { it.trim().removeSurrounding("'") }  // Remove any surrounding quotes around individual items
+                .filter { it.isNotEmpty() }
+        } catch (mealsDataException: MealsDataException) {
+            throw MealsDataException.InvalidListFieldException()
+        }
     }
 
     private fun parseNutritionFacts(listOfNutritionFacts: String): NutritionFacts { //takes list of nutrition facts as a string and parse it to a NutritionFacts instance
         val list = listOfNutritionFacts
             .removePrefix("[")
             .removeSuffix("]")
-            .split(", ").map { it.toFloat() }
-        return NutritionFacts(
-            calories = list[0],
-            totalFat = list[1],
-            sugar = list[2],
-            sodium = list[3],
-            protein = list[4],
-            saturatedFat = list[5],
-            carbohydrates = list[6]
-        )
+            .split(", ").map { it.toFloatOrNull() ?: throw MealsDataException.InvalidNumericFormatException(it) }
+        return try {
+            NutritionFacts(
+                calories = list[NutritionFactsIndexToField.CALORIES],
+                totalFat = list[NutritionFactsIndexToField.TOTAL_FAT],
+                sugar = list[NutritionFactsIndexToField.SUGAR],
+                sodium = list[NutritionFactsIndexToField.SODIUM],
+                protein = list[NutritionFactsIndexToField.PROTEIN],
+                saturatedFat = list[NutritionFactsIndexToField.SATURATED_FACTS],
+                carbohydrates = list[NutritionFactsIndexToField.CARBOHYDRATES]
+            )
+        } catch (mealsDataException: MealsDataException) {
+            throw MealsDataException.InvalidNutritionFactsException()
+        }
     }
 
     private fun splitCsvLine(line: String): List<String> {
@@ -62,25 +72,33 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
 
 
         var i = 0
-        while (i < line.length) {
-            val char = line[i]
-            when {
-                char == '"' -> {
-                    inDoubleQuotes = !inDoubleQuotes
-                }
+        try {
+            while (i < line.length) {
+                val char = line[i]
+                when {
+                    char == '"' -> {
+                        inDoubleQuotes = !inDoubleQuotes
+                    }
 
-                char == ',' && !inDoubleQuotes -> {
-                    fields.add(current.trim())
-                    current = ""
-                }
+                    char == ',' && !inDoubleQuotes -> {
+                        fields.add(current.trim())
+                        current = ""
+                    }
 
-                else -> {
-                    current += char
+                    else -> {
+                        current += char
+                    }
                 }
+                i++
             }
-            i++
+            fields.add(current.trim())
+        } catch (mealsDataException: MealsDataException) {
+            throw MealsDataException.InvalidMealRecordFormatException()
         }
-        fields.add(current.trim())
-        return fields
+        return fields.map { it.trim() }
+    }
+
+    private fun String.toIntOrThrow(): Int {
+        return this.trim().toIntOrNull() ?: throw MealsDataException.InvalidNumericFormatException(this)
     }
 }

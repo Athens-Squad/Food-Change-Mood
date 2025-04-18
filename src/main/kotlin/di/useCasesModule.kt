@@ -8,6 +8,7 @@ import com.thechance.logic.useCases.SearchByCountryName
 import com.thechance.logic.useCases.SoThinUseCase
 import com.thechance.logic.useCases.SuggestFoodUseCase
 import com.thechance.logic.useCases.MealPrepTimeGuessGameUseCase
+import com.thechance.logic.IngredientGameUseCase
 import org.koin.dsl.module
 import kotlin.math.sin
 
@@ -22,5 +23,8 @@ val useCasesModule = module {
     single { GymHelperUseCase(get())}
     single { GetHealthyMealsUseCase(get()) }
 
+
+    single { IngredientGameUseCase(get())  }
+    single { RandomTenMealIncludePotatoUseCase(get()) }
 
 }
