@@ -8,7 +8,6 @@ class KetoDietMealUseCase(
 ) {
     private val seenMeals = mutableSetOf<Meal>()
     fun suggestKetoMeal(): Meal?{
-
         return try {
             getKetoMeals()
                 .random()
