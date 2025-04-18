@@ -13,7 +13,7 @@ import com.thechance.logic.useCases.GymHelperUseCase
 
 import com.thechance.logic.useCases.SuggestFoodUseCase
 import com.thechance.logic.useCases.MealPrepTimeGuessGameUseCase
-import com.thechance.logic.IngredientGameUseCase
+import com.thechance.logic.useCases.IngredientGameUseCase
 import org.koin.dsl.module
 
 val useCasesModule = module {

@@ -2,7 +2,7 @@ package com.thechance.logic.useCases
 import com.thechance.model.Meal
 import com.thechance.logic.MealsRepository
 
-class SuggestItalianMealsForLargeGroupsUseCase(
+class GetItalianMealsForLargeGroupsUseCase(
     private val mealsRepository: MealsRepository
 ) {
     fun suggestItalianMealsForLargeGroups(): List<Meal> {
