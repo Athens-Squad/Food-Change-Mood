@@ -1,4 +1,9 @@
 package com.thechance.presentation
 
-class FoodChangeMoodCLI {
-}
+import com.thechance.logic.IngredientGameUseCase
+
+class FoodChangeMoodCLI(
+
+) {
+
+   }
