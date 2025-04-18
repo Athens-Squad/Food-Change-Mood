@@ -1,6 +1,6 @@
 package com.thechance.presentation
 
-import com.thechance.logic.IngredientGameUseCase
+import com.thechance.logic.useCases.IngredientGameUseCase
 import com.thechance.logic.useCases.*
 import model.MealGameResult
 
@@ -145,7 +145,7 @@ class FoodChangeMoodCLI(
 
     private fun suggestSoThinMeal() {
         val meal = soThinUseCase.getPlus700Meal()
-        if (true) println("Suggested Meal with more than 700 calories: ${meal.name} - Calories: ${meal.nutritionFacts.calories}") else println("No more meals with more than 700 calories available.")
+        if (true) println("Suggested Meal with more than 700 calories: ${meal?.name} - Calories: ${meal?.nutritionFacts?.calories}") else println("No more meals with more than 700 calories available.")
     }
 
     private fun listSeaFoodMealsSortedByProtein() {

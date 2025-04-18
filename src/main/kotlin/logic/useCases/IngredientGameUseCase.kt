@@ -1,6 +1,6 @@
-package com.thechance.logic
+package com.thechance.logic.useCases
 
-import com.thechance.model.Meal
+import com.thechance.logic.MealsRepository
 
 class IngredientGameUseCase(private val mealsRepository: MealsRepository) {
 

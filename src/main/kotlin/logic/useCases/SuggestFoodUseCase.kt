@@ -16,10 +16,15 @@ class SuggestFoodUseCase(
     }
 
     private fun isEasy(meal: Meal): Boolean {
-        return (meal.tags.contains("30-minutes-or-less")
-                || meal.tags.contains("15-minutes-or-less")
+        return (meal.tags.contains(MINUTES30)
+                || meal.tags.contains(MINUTES15)
                 || meal.minutes <= 30)
                 && meal.numberOfIngredients <= 5
                 && meal.numberOfSteps <= 6
+    }
+
+    companion object{
+        const val MINUTES30 = "30-minutes-or-less"
+        const val MINUTES15 = "15-minutes-or-less"
     }
 }

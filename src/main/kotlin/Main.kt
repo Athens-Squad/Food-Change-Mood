@@ -2,8 +2,8 @@ package com.thechance
 
 import com.thechance.di.appModule
 import com.thechance.di.useCasesModule
-import com.thechance.logic.MealsRepository
 import com.thechance.logic.useCases.GetSeaFoodMealsSortedByProteinContent
+import com.thechance.logic.useCases.IngredientGameUseCase
 import com.thechance.logic.useCases.SearchByCountryName
 import com.thechance.logic.useCases.SoThinUseCase
 import com.thechance.presentation.FoodChangeMoodCLI
@@ -22,7 +22,7 @@ fun main() {
     val gymHelperUseCase = getKoin().get<com.thechance.logic.useCases.GymHelperUseCase>()
     val soThinUseCase = getKoin().get<SoThinUseCase>()
     val getSeaFoodMealsSortedByProteinContent = getKoin().get<GetSeaFoodMealsSortedByProteinContent>()
-    val ingredientGameUseCase = getKoin().get<com.thechance.logic.IngredientGameUseCase>()
+    val ingredientGameUseCase = getKoin().get<IngredientGameUseCase>()
     val getRandomTenMealIncludePotatoUseCase = getKoin().get<com.thechance.logic.useCases.GetRandomTenMealIncludePotatoUseCase>()
 
     val cli = FoodChangeMoodCLI(
