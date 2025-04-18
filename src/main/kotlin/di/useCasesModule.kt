@@ -11,7 +11,6 @@ import com.thechance.logic.useCases.SuggestFoodUseCase
 import com.thechance.logic.useCases.MealPrepTimeGuessGameUseCase
 import com.thechance.logic.IngredientGameUseCase
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val useCasesModule = module {
     single { MealPrepTimeGuessGameUseCase(get()) }
