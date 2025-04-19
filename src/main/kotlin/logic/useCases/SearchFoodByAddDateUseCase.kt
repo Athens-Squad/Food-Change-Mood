@@ -6,7 +6,7 @@ import com.thechance.model.Meal
 import com.thechance.model.NameDateMeal
 import java.util.*
 
-class SearchFoodByAddDate(private val repo: MealsRepository) {
+class SearchFoodByAddDateUseCase(private val repo: MealsRepository) {
     fun getFoodByAddDate(date: Date): List<NameDateMeal> {
         val meals = repo.getAllMeals()
             .filterNotNull()

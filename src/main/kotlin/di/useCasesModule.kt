@@ -31,4 +31,22 @@ val useCasesModule = module {
     single { IngredientGameUseCase(get())  }
     single { GetRandomTenMealIncludePotatoUseCase(get()) }
     single { GetItalianMealsForLargeGroupsUseCase(get()) }
+    single { SearchFoodByAddDateUseCase(get()) }
+    single { FoodChangeMoodUseCases(
+        getHealthyMealsUseCase = get(),
+        mealSearchUseCase = get(),
+        getItalianMealsForLargeGroupsUseCase = get(),
+        ketoDietMealUseCase = get(),
+        searchFoodByAddDateUseCase = get(),
+        searchByCountryName = get(),
+        getIraqiMealsUseCase = get(),
+        suggestFoodUseCase = get(),
+        guessGameUseCase = get(),
+        getRandomSweetWithNoEggs = get(),
+        gymHelperUseCase = get(),
+        soThinUseCase = get(),
+        getSeaFoodMealsSortedByProteinContent = get(),
+        ingredientGameUseCase = get(),
+        getRandomTenMealIncludePotatoUseCase = get()
+    ) }
 }

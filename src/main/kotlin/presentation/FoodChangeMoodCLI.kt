@@ -1,11 +1,20 @@
 package com.thechance.presentation
 
+import com.thechance.logic.NoMealsWithGivenDateException
 import com.thechance.logic.useCases.IngredientGameUseCase
 import com.thechance.logic.useCases.*
+import com.thechance.logic.useCases.mealSearchUseCase.MealSearchUseCase
 import model.MealGameResult
+import java.text.ParseException
+import java.text.ParsePosition
+import java.text.SimpleDateFormat
 
 class FoodChangeMoodCLI(
     private val getHealthyMealsUseCase: GetHealthyMealsUseCase,
+    private val mealSearchUseCase: MealSearchUseCase,
+    private val getItalianMealsForLargeGroupsUseCase: GetItalianMealsForLargeGroupsUseCase,
+    private val ketoDietMealUseCase: KetoDietMealUseCase,
+    private val searchFoodByAddDateUseCase: SearchFoodByAddDateUseCase,
     private val searchByCountryName: SearchByCountryName,
     private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
     private val suggestFoodUseCase: SuggestFoodUseCase,
@@ -23,30 +32,38 @@ class FoodChangeMoodCLI(
             println("Welcome to the Food Change Mood App!")
             println("Select an option:")
             println("1: List Healthy Fast Food Meals")
-            println("2: Search Meal by Country")
+            println("2: Search Meal by Name")
             println("3: List Iraqi Meals")
             println("4: Suggest Easy Meals")
             println("5: Guess Meal Preparation Time")
             println("6: Suggest a Sweet with No Eggs")
-            println("7: Gym Helper (Calories and Protein)")
-            println("8: Suggest a Meal with More Than 700 Calories")
-            println("9: List Seafood Meals Sorted by Protein Content")
-            println("10: Play Ingredient Guessing Game")
-            println("11: Suggest 10 Meals with Potatoes")
+            println("7: Keto Diet Meal")
+            println("8: Search Food By Add Date")
+            println("9: Gym Helper")
+            println("10: Search Meals By Country")
+            println("11: Play Ingredient Guessing Game")
+            println("12: Suggest 10 Meals with Potatoes")
+            println("13: Suggest a Meal with More Than 700 Calories")
+            println("14: List Seafood Meals Sorted by Protein Content")
+            println("15: Large Group Italian Meals")
             println("0: Exit")
 
             when (readLine()?.toIntOrNull()) {
                 1 -> listHealthyFastFoodMeals()
-                2 -> searchMealsByCountry()
+                2 -> searchMealsByName()
                 3 -> listIraqiMeals()
                 4 -> suggestEasyMeals()
                 5 -> startGuessGame()
                 6 -> suggestSweetWithNoEggs()
-                7 -> gymHelper()
-                8 -> suggestSoThinMeal()
-                9 -> listSeaFoodMealsSortedByProtein()
-                10 -> startIngredientGame()
-                11 -> suggestPotatoMeals()
+                7 -> ketoDiet()
+                8 -> searchFoodByAddDate()
+                9 -> gymHelper()
+                10 -> searchMealsByCountry()
+                11 -> startIngredientGame()
+                12 -> suggestPotatoMeals()
+                13 -> suggestSoThinMeal()
+                14 -> listSeaFoodMealsSortedByProtein()
+                15 -> largeGroupItalian()
                 0 -> {
                     println("Exiting the app. Goodbye!")
                     return
@@ -54,6 +71,61 @@ class FoodChangeMoodCLI(
                 else -> println("Invalid option. Please choose again.")
             }
         }
+    }
+
+    private fun largeGroupItalian() {
+        getItalianMealsForLargeGroupsUseCase.suggestItalianMealsForLargeGroups()
+            .forEach { meal ->
+                println(meal)
+            }
+    }
+
+    private fun searchFoodByAddDate() {
+        println("Please Enter the desired date : yyyy-MM-dd")
+        try {
+            val date = SimpleDateFormat("yyyy-MM-dd").parse(readlnOrNull())
+            searchFoodByAddDateUseCase.getFoodByAddDate(date)
+                .forEach { nameDateMeal ->
+                    println("Meal Id : ${nameDateMeal.id} \n" +
+                            "Meal Name : ${nameDateMeal.name} \n Meal Date : ${nameDateMeal.date}\n")
+                }
+            println("Enter the ID To see details : ")
+            println(searchFoodByAddDateUseCase.getMealById(readlnOrNull()?.toIntOrNull()))
+        } catch (incorrectFormatException: ParseException) {
+            println("Incorrect Date Format!")
+            searchFoodByAddDate()
+        } catch (noDataException: NoMealsWithGivenDateException) {
+            println(noDataException.message)
+            return
+        }
+    }
+
+    private fun ketoDiet() {
+        val ketoMeal = ketoDietMealUseCase.suggestKetoMeal()
+        if (ketoMeal != null) {
+            println("Suggested Keto Meal: ${ketoMeal.name} - ${ketoMeal.description}")
+            println("Would you like to see more details for ${ketoMeal.name}? (yes/no)")
+            val userInput = readlnOrNull()?.trim()
+            if (userInput.equals("yes", ignoreCase = true)) {
+                println("Details: $ketoMeal")
+            } else if (userInput.equals("No", ignoreCase = true)) {
+                ketoDiet()
+            } else {
+                println("Invalid Input!")
+            }
+        } else {
+            println("No more Keto Diet Meals Available.")
+        }
+    }
+
+    private fun searchMealsByName() {
+        println("Please Enter the Meal Name: ")
+        val searchKeyWord = readlnOrNull()?:""
+        mealSearchUseCase.search(searchKeyWord)
+            .forEach { meal ->
+                println(meal)
+            }
+
     }
 
     private fun listHealthyFastFoodMeals() {
@@ -82,7 +154,7 @@ class FoodChangeMoodCLI(
         val iraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
         println("Iraqi Meals:")
         if (iraqiMeals.isNotEmpty()) {
-            iraqiMeals.forEach { println(it?.name) }
+            iraqiMeals.forEach { println(it) }
         } else {
             println("No Iraqi meals found.")
         }
@@ -92,7 +164,7 @@ class FoodChangeMoodCLI(
         val easyMeals = suggestFoodUseCase.getMeals()
         println("Suggested Easy Meals:")
         if (easyMeals.isNotEmpty()) {
-            easyMeals.forEach { println(it.name) }
+            easyMeals.forEach { println(it) }
         } else {
             println("No meals available.")
         }
@@ -120,8 +192,13 @@ class FoodChangeMoodCLI(
         if (sweet != null) {
             println("Suggested Sweet (No Eggs): ${sweet.name} - ${sweet.description}")
             println("Would you like to see more details for ${sweet.name}? (yes/no)")
-            if (readLine()?.trim()?.equals("yes", ignoreCase = true) == true) {
-                println("Details: ${sweet.description}")
+            val userInput = readlnOrNull()?.trim()
+            if (userInput.equals("yes", ignoreCase = true)) {
+                println("Details: $sweet")
+            } else if (userInput.equals("No", ignoreCase = true)) {
+                suggestSweetWithNoEggs()
+            } else {
+                println("Invalid Input!")
             }
         } else {
             println("No more egg-free sweets available.")
@@ -137,7 +214,7 @@ class FoodChangeMoodCLI(
         val meals = gymHelperUseCase.getMealsByCaloriesAndProtein(calories, protein)
         println("Meals matching your criteria (Calories: $calories, Protein: $protein):")
         if (meals.isNotEmpty()) {
-            meals.forEach { println(it.name) }
+            meals.forEach { println(it) }
         } else {
             println("No meals found matching those criteria.")
         }
@@ -190,6 +267,7 @@ class FoodChangeMoodCLI(
                 println("✅ Correct!")
             } else {
                 println("❌ Wrong! The correct answer was: $correct")
+                return
             }
 
             println("Current Score: ${ingredientGameUseCase.getScore()}")
@@ -203,7 +281,7 @@ class FoodChangeMoodCLI(
         println("Here are 10 meals that include potatoes:")
         if (meals.isNotEmpty()) {
             meals.forEachIndexed { index, meal ->
-                println("${index + 1}: ${meal.name}")
+                println("${index + 1}: $meal")
             }
         } else {
             println("No potato meals found.")

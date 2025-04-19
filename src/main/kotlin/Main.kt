@@ -2,10 +2,8 @@ package com.thechance
 
 import com.thechance.di.appModule
 import com.thechance.di.useCasesModule
-import com.thechance.logic.useCases.GetSeaFoodMealsSortedByProteinContent
-import com.thechance.logic.useCases.IngredientGameUseCase
-import com.thechance.logic.useCases.SearchByCountryName
-import com.thechance.logic.useCases.SoThinUseCase
+import com.thechance.logic.useCases.*
+import com.thechance.logic.useCases.mealSearchUseCase.MealSearchUseCase
 import com.thechance.presentation.FoodChangeMoodCLI
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
@@ -13,30 +11,24 @@ import org.koin.java.KoinJavaComponent.getKoin
 fun main() {
     startKoin { modules(appModule, useCasesModule) }
 
-    val getHealthyMealsUseCase = getKoin().get<com.thechance.logic.useCases.GetHealthyMealsUseCase>()
-    val searchByCountryName = getKoin().get<SearchByCountryName>()
-    val getIraqiMealsUseCase = getKoin().get<com.thechance.logic.useCases.GetIraqiMealsUseCase>()
-    val suggestFoodUseCase = getKoin().get<com.thechance.logic.useCases.SuggestFoodUseCase>()
-    val guessGameUseCase = getKoin().get<com.thechance.logic.useCases.MealPrepTimeGuessGameUseCase>()
-    val getRandomSweetWithNoEggs = getKoin().get<com.thechance.logic.useCases.GetRandomSweetWithNoEggsUseCase>()
-    val gymHelperUseCase = getKoin().get<com.thechance.logic.useCases.GymHelperUseCase>()
-    val soThinUseCase = getKoin().get<SoThinUseCase>()
-    val getSeaFoodMealsSortedByProteinContent = getKoin().get<GetSeaFoodMealsSortedByProteinContent>()
-    val ingredientGameUseCase = getKoin().get<IngredientGameUseCase>()
-    val getRandomTenMealIncludePotatoUseCase = getKoin().get<com.thechance.logic.useCases.GetRandomTenMealIncludePotatoUseCase>()
+    val foodChangeMoodUseCases = getKoin().get<FoodChangeMoodUseCases>()
 
     val cli = FoodChangeMoodCLI(
-        getHealthyMealsUseCase,
-        searchByCountryName,
-        getIraqiMealsUseCase,
-        suggestFoodUseCase,
-        guessGameUseCase,
-        getRandomSweetWithNoEggs,
-        gymHelperUseCase,
-        soThinUseCase,
-        getSeaFoodMealsSortedByProteinContent,
-        ingredientGameUseCase,
-        getRandomTenMealIncludePotatoUseCase
+        getHealthyMealsUseCase = foodChangeMoodUseCases.getHealthyMealsUseCase,
+        mealSearchUseCase = foodChangeMoodUseCases.mealSearchUseCase,
+        getItalianMealsForLargeGroupsUseCase = foodChangeMoodUseCases.getItalianMealsForLargeGroupsUseCase,
+        ketoDietMealUseCase = foodChangeMoodUseCases.ketoDietMealUseCase,
+        searchFoodByAddDateUseCase = foodChangeMoodUseCases.searchFoodByAddDateUseCase,
+        searchByCountryName = foodChangeMoodUseCases.searchByCountryName,
+        getIraqiMealsUseCase = foodChangeMoodUseCases.getIraqiMealsUseCase,
+        suggestFoodUseCase = foodChangeMoodUseCases.suggestFoodUseCase,
+        guessGameUseCase = foodChangeMoodUseCases.guessGameUseCase,
+        getRandomSweetWithNoEggs = foodChangeMoodUseCases.getRandomSweetWithNoEggs,
+        gymHelperUseCase = foodChangeMoodUseCases.gymHelperUseCase,
+        soThinUseCase = foodChangeMoodUseCases.soThinUseCase,
+        getSeaFoodMealsSortedByProteinContent = foodChangeMoodUseCases.getSeaFoodMealsSortedByProteinContent,
+        ingredientGameUseCase = foodChangeMoodUseCases.ingredientGameUseCase,
+        getRandomTenMealIncludePotatoUseCase = foodChangeMoodUseCases.getRandomTenMealIncludePotatoUseCase
     )
 
     cli.start()
