@@ -8,6 +8,7 @@ on:
       - refactor_data
       - presentation
       - github-action
+      - feature/cli
 
   pull_request:
     branches:
