@@ -27,7 +27,7 @@ class SoThinUseCaseTest {
         //when
         val meal = soThinUseCase.getPlus700Meal()
         //then
-        assertThat(meal?.nutritionFacts?.calories).isGreaterThan(7000f)
+        assertThat(meal?.nutritionFacts?.calories).isGreaterThan(700f)
     }
 
     @Test
