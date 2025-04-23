@@ -88,6 +88,36 @@ class GetHealthyMealsUseCaseTest{
         assertThat(result.first().name).isEqualTo("Healthy Salad")
     }
 
+    @Test
+    fun `should exclude meals that exceed 15 minutes even if nutrients are healthy`() {
+        val repo = object : MealsRepository {
+            override fun getAllMeals(): List<Meal?> {
+                return listOf(
+                    Meal(
+                        name = "Healthy Soup",
+                        id = 4,
+                        minutes = 20,
+                        contributorId = 126,
+                        submitted = Date(),
+                        tags = listOf("healthy"),
+                        nutritionFacts = NutritionFacts(300f, 5f, 5f, 150f, 20f, 1f, 25f),
+                        steps = listOf("Step 1"),
+                        description = "Healthy but slow",
+                        ingredients = listOf("ingredients"),
+                        numberOfIngredients = 1,
+                        numberOfSteps = 1
+                    )
+                )
+            }
+        }
+
+        val useCase = GetHealthyMealsUseCase(repo)
+        val result = useCase.getHealthyFastMeals()
+
+        assertThat(result).isEmpty()
+    }
+
+
 
 
     companion object {
