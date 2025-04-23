@@ -9,6 +9,7 @@ open class FakeMealsRepository: MealsRepository {
     override fun getAllMeals(): List<Meal?> {
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         return listOf(
+            null,
             Meal(
                 name = "Vegan Tacos",
                 id = 101,
