@@ -134,6 +134,22 @@ class GetHealthyMealsUseCaseTest{
         assertThat(result).containsExactly(healthyMeal)
     }
 
+    @Test
+    fun `should not include meals with exactly average nutrition facts`() {
+        val meal1 = createMeal(minutes = 10, fat = 10.0, satFat = 5.0, carbs = 60.0)
+        val meal2 = createMeal(minutes = 10, fat = 10.0, satFat = 5.0, carbs = 60.0)
+
+        val repository = object : MealsRepository {
+            override fun getAllMeals(): List<Meal?> {
+                return listOf(meal1, meal2)
+            }
+        }
+
+        val useCase = GetHealthyMealsUseCase(repository)
+        val result = useCase.getHealthyFastMeals()
+
+        assertThat(result).isEmpty()
+    }
 
 
     companion object {
