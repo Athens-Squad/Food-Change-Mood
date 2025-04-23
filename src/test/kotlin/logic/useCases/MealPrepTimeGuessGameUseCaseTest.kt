@@ -8,6 +8,8 @@ import io.mockk.mockk
 import model.MealGameResult
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class MealPrepTimeGuessGameUseCaseTest {
 
@@ -32,35 +34,22 @@ class MealPrepTimeGuessGameUseCaseTest {
         assertThat(result).isNotNull()
     }
 
-    @Test
-    fun `should return WON, when user enters correct meal prep time`() {
+
+    @ParameterizedTest
+    @CsvSource(
+        "30, WON",
+        "40, TOO_HIGH",
+        "20, TOO_LOW"
+    )
+    fun `should return the suitable game result, when user enter the guess preparation time`(
+        userGuessInput: Int,
+        expectedGameResult: MealGameResult
+    ) {
         // When
-        val guessInput = 30
-        val result = mealPrepTimeGuessGameUseCase.playMealGame(guessInput)
+        val result = mealPrepTimeGuessGameUseCase.playMealGame(userGuessInput)
 
         // Then
-        assertThat(result).isEqualTo(MealGameResult.WON)
-    }
-
-
-    @Test
-    fun `should return TOO_HIGH, when user enters meal prep time higher than actual`() {
-        // When
-        val guessInput = 40
-        val result = mealPrepTimeGuessGameUseCase.playMealGame(guessInput)
-
-        // Then
-        assertThat(result).isEqualTo(MealGameResult.TOO_HIGH)
-    }
-
-    @Test
-    fun `should return TOO_LOW, when user enters meal prep time lower than actual`() {
-        // When
-        val guessInput = 20
-        val result = mealPrepTimeGuessGameUseCase.playMealGame(guessInput)
-
-        // Then
-        assertThat(result).isEqualTo(MealGameResult.TOO_LOW)
+        assertThat(result).isEqualTo(expectedGameResult)
     }
 
     @Test
