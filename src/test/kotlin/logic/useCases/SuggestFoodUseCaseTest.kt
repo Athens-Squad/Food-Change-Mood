@@ -7,6 +7,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import com.google.common.truth.Truth.assertThat
+import helper.createEasyMeal
 
 class SuggestFoodUseCaseTest {
     private lateinit var mealsRepository: MealsRepository
@@ -48,7 +49,7 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
     @Test
@@ -64,7 +65,7 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
     @Test
@@ -80,7 +81,7 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
     @Test
@@ -96,7 +97,7 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
     @Test
@@ -112,7 +113,7 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
     @Test
@@ -128,7 +129,7 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
 
@@ -144,43 +145,40 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
     @Test
     fun `should return null when some meals meet the criteria, others do not`() {
         //Given
+        val invalidMeal1 = createEasyMeal(minutes = 40, numberOfIngredients = 7, numberOfSteps = 8)
+        val invalidMeal2 = createEasyMeal(minutes = 35, numberOfIngredients = 8, numberOfSteps = 9)
+        val validMeal1 = createEasyMeal(minutes = 18, numberOfIngredients = 5, numberOfSteps = 4)
+        val validMeal2 = createEasyMeal(minutes = 30, numberOfIngredients = 4, numberOfSteps = 6)
+
         every { mealsRepository.getAllMeals() } returns listOf(
-            createEasyMeal(minutes = 40, numberOfIngredients = 7, numberOfSteps = 8),
-            createEasyMeal(minutes = 35, numberOfIngredients = 8, numberOfSteps = 9),
-            createEasyMeal(minutes = 18, numberOfIngredients = 5, numberOfSteps = 4),
-            createEasyMeal(minutes = 30, numberOfIngredients = 4, numberOfSteps = 6)
+            invalidMeal1,
+            invalidMeal2,
+            validMeal1,
+            validMeal2
         )
 
         //When
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(2)
+        assertThat(result).containsExactly(validMeal1, validMeal2)
     }
 
     @Test
     fun `should return only 10 meals when more than 10 meals meet the criteria`() {
         //Given
-        every { mealsRepository.getAllMeals() } returns listOf(
-            createEasyMeal(minutes = 18, numberOfIngredients = 5, numberOfSteps = 4),
-            createEasyMeal(minutes = 30, numberOfIngredients = 4, numberOfSteps = 6),
-            createEasyMeal(minutes = 5, numberOfIngredients = 5, numberOfSteps = 6),
-            createEasyMeal(minutes = 18, numberOfIngredients = 5, numberOfSteps = 4),
-            createEasyMeal(minutes = 22, numberOfIngredients = 4, numberOfSteps = 5),
-            createEasyMeal(minutes = 7, numberOfIngredients = 4, numberOfSteps = 4),
-            createEasyMeal(minutes = 18, numberOfIngredients = 1, numberOfSteps = 6),
-            createEasyMeal(minutes = 20, numberOfIngredients = 2, numberOfSteps = 4),
-            createEasyMeal(minutes = 17, numberOfIngredients = 5, numberOfSteps = 1),
-            createEasyMeal(minutes = 13, numberOfIngredients = 5, numberOfSteps = 2),
-            createEasyMeal(minutes = 23, numberOfIngredients = 4, numberOfSteps = 3),
-            createEasyMeal(minutes = 4, numberOfIngredients = 3, numberOfSteps = 5)
-        )
+        val meals = List(10){ index ->
+            createEasyMeal(minutes = 10 + index, numberOfIngredients = 5, numberOfSteps = 4)
+
+        }
+        every { mealsRepository.getAllMeals() } returns meals
+
 
         //When
         val result = suggestFoodUseCase.getMeals()
@@ -192,21 +190,13 @@ class SuggestFoodUseCaseTest {
 
     @Test
     fun `should return shuffled (different) meals every time when called`() {
+
         //Given
-        every { mealsRepository.getAllMeals() } returns listOf(
-            createEasyMeal(minutes = 18, numberOfIngredients = 5, numberOfSteps = 4),
-            createEasyMeal(minutes = 30, numberOfIngredients = 4, numberOfSteps = 6),
-            createEasyMeal(minutes = 5, numberOfIngredients = 5, numberOfSteps = 6),
-            createEasyMeal(minutes = 18, numberOfIngredients = 5, numberOfSteps = 4),
-            createEasyMeal(minutes = 22, numberOfIngredients = 4, numberOfSteps = 5),
-            createEasyMeal(minutes = 7, numberOfIngredients = 4, numberOfSteps = 4),
-            createEasyMeal(minutes = 18, numberOfIngredients = 1, numberOfSteps = 6),
-            createEasyMeal(minutes = 20, numberOfIngredients = 2, numberOfSteps = 4),
-            createEasyMeal(minutes = 17, numberOfIngredients = 5, numberOfSteps = 1),
-            createEasyMeal(minutes = 13, numberOfIngredients = 5, numberOfSteps = 2),
-            createEasyMeal(minutes = 23, numberOfIngredients = 4, numberOfSteps = 3),
-            createEasyMeal(minutes = 4, numberOfIngredients = 3, numberOfSteps = 5)
-        )
+        val meals = List(12){ index ->
+            createEasyMeal(minutes = 10 + index, numberOfIngredients = 5, numberOfSteps = 4)
+
+        }
+        every { mealsRepository.getAllMeals() } returns meals
 
         //When
         val firstResult = suggestFoodUseCase.getMeals()
@@ -239,7 +229,7 @@ class SuggestFoodUseCaseTest {
         val result = suggestFoodUseCase.getMeals()
 
         //Then
-        assertThat(result).hasSize(0)
+        assertThat(result).isEmpty()
     }
 
 

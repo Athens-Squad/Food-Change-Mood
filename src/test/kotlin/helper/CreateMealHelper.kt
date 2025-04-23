@@ -1,4 +1,4 @@
-package logic.useCases
+package helper
 
 import com.thechance.model.Meal
 import com.thechance.model.NutritionFacts
