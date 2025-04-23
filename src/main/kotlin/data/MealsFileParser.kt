@@ -32,11 +32,7 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
 
             throw MealsDataException.InvalidListFieldException()
 
-        } catch (invalidNutritionFactsException: MealsDataException.InvalidNutritionFactsException) {
-
-            throw MealsDataException.InvalidNutritionFactsException()
-
-        } catch (invalidNumericFormatException: MealsDataException.InvalidNumericFormatException) {
+        }  catch (invalidNumericFormatException: MealsDataException.InvalidNumericFormatException) {
 
             throw MealsDataException.InvalidNumericFormatException(invalidNumericFormatException.str)
 
@@ -67,19 +63,15 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
             .removePrefix("[")
             .removeSuffix("]")
             .split(", ").map { it.toFloatOrNull() ?: throw MealsDataException.InvalidNumericFormatException(it) }
-        return try {
-            NutritionFacts(
-                calories = list[NutritionFactsIndexToField.CALORIES],
-                totalFat = list[NutritionFactsIndexToField.TOTAL_FAT],
-                sugar = list[NutritionFactsIndexToField.SUGAR],
-                sodium = list[NutritionFactsIndexToField.SODIUM],
-                protein = list[NutritionFactsIndexToField.PROTEIN],
-                saturatedFat = list[NutritionFactsIndexToField.SATURATED_FACTS],
-                carbohydrates = list[NutritionFactsIndexToField.CARBOHYDRATES]
-            )
-        } catch (mealsDataException: MealsDataException) {
-            throw MealsDataException.InvalidNutritionFactsException()
-        }
+        return NutritionFacts(
+            calories = list[NutritionFactsIndexToField.CALORIES],
+            totalFat = list[NutritionFactsIndexToField.TOTAL_FAT],
+            sugar = list[NutritionFactsIndexToField.SUGAR],
+            sodium = list[NutritionFactsIndexToField.SODIUM],
+            protein = list[NutritionFactsIndexToField.PROTEIN],
+            saturatedFat = list[NutritionFactsIndexToField.SATURATED_FACTS],
+            carbohydrates = list[NutritionFactsIndexToField.CARBOHYDRATES]
+        )
     }
 
     private fun splitCsvLine(line: String): List<String> {
@@ -89,29 +81,25 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
 
 
         var i = 0
-        try {
-            while (i < line.length) {
-                val char = line[i]
-                when {
-                    char == '"' -> {
-                        inDoubleQuotes = !inDoubleQuotes
-                    }
-
-                    char == ',' && !inDoubleQuotes -> {
-                        fields.add(current.trim())
-                        current = ""
-                    }
-
-                    else -> {
-                        current += char
-                    }
+        while (i < line.length) {
+            val char = line[i]
+            when {
+                char == '"' -> {
+                    inDoubleQuotes = !inDoubleQuotes
                 }
-                i++
+
+                char == ',' && !inDoubleQuotes -> {
+                    fields.add(current.trim())
+                    current = ""
+                }
+
+                else -> {
+                    current += char
+                }
             }
-            fields.add(current.trim())
-        } catch (mealsDataException: MealsDataException) {
-            throw MealsDataException.InvalidMealRecordFormatException()
+            i++
         }
+        fields.add(current.trim())
         return fields.map { it.trim() }
     }
 

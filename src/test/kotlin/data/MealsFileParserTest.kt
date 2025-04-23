@@ -54,4 +54,18 @@ class MealsFileParserTest {
    parser.parseRecord(line)
   }
  }
+
+ @Test
+ fun `should throw InvalidNumericFormatException when non-numeric ID provided`() {
+  // given
+  val line = "Grilled Salmon,NN,55,47,2005-09-16,\"['seafood']\",\"[51a5, 0.0, 13.0, 0.0, 2.0, 0.0, 4.0]\",11,\"['if desired , season with salt']\",\"autumn is my favorite time of year to cook this recipe\",\"['salt']\",7"
+
+  //when & then
+  assertThrows<MealsDataException.InvalidNumericFormatException> {
+   parser.parseRecord(line)
+  }
+ }
+
+
+
 }
