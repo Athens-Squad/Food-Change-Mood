@@ -1,4 +1,4 @@
-name: Kotlin Tests
+name: Run Tests
 
 on:
   push:
@@ -16,7 +16,7 @@ on:
       - develop
 
 jobs:
-  tests:
+  run_tests:
     runs-on: ubuntu-latest
 
     steps:
