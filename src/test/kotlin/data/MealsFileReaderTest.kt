@@ -11,7 +11,7 @@ import fake.validMealText
 class MealsFileReaderTest {
 
   @Test
-  fun `should return valid meal when record is valid`() {
+  fun `should return one valid string meal for every valid record`() {
    //given
    val reader = MealsFileReader(createFileFromMealText(validMealText))
    //when
@@ -22,7 +22,7 @@ class MealsFileReaderTest {
   }
 
   @Test
-  fun `should read one meal when meal is multi-lined`() {
+  fun `should read exactly one meal when meal is multi-lined`() {
    //given
    val reader = MealsFileReader(createFileFromMealText(multiLinedMealText))
    //when

@@ -12,7 +12,7 @@ class MealsFileParserTest {
  private val parser = MealsFileParser(dateFormat)
 
  @Test
- fun `should return meal when line is a valid`() {
+ fun `should return valid meal when line is a valid`() {
   //given
   val line = "Grilled Salmon,13,55,47,2005-09-16,\"['seafood']\",\"[51.5, 0.0, 13.0, 0.0, 2.0, 0.0, 4.0]\",11,\"['if desired , season with salt']\",\"autumn is my favorite time of year to cook this recipe\",\"['salt']\",7"
 
@@ -65,7 +65,4 @@ class MealsFileParserTest {
    parser.parseRecord(line)
   }
  }
-
-
-
 }
