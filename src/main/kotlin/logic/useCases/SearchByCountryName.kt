@@ -8,17 +8,17 @@ class SearchByCountryName(private val repository: MealsRepository) {
 
     fun getMealsByCountry(country: String): List<Meal> {
         val lowerCaseCountry = country.lowercase()
-        val nationality = countryToNationality[lowerCaseCountry].toString()
+        val nationality = countryToNationality[country].toString().lowercase()
         return repository.getAllMeals()
             .filterNotNull()
             .filter { meal ->
-                meal.name.contains(nationality)||
+                meal.name.contains(nationality, ignoreCase = true)||
                 meal.tags.any {tag ->
                     tag.lowercase() == lowerCaseCountry
                     ||tag.lowercase() == nationality
                 }
-                    ||meal.description.contains(lowerCaseCountry)
-                    ||meal.description.contains(nationality)
+                    ||meal.description.contains(lowerCaseCountry, ignoreCase = true)
+                    ||meal.description.contains(nationality, ignoreCase = true)
 
             }
             .shuffled()
