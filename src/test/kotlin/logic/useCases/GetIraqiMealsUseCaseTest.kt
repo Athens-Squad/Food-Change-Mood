@@ -26,7 +26,7 @@ class GetIraqiMealsUseCaseTest {
     fun `should return iraqi meals when the country or nationality is written in description`(countryDescription: String) {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = listOf("main-dish", "easy"),
                 description = "A new $countryDescription meal"
@@ -44,7 +44,7 @@ class GetIraqiMealsUseCaseTest {
     fun `should return iraqi meals when the nationality is written in tags`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = listOf("main-dish", "iraqi"),
                 description = "A new meal"
@@ -62,12 +62,12 @@ class GetIraqiMealsUseCaseTest {
     fun `should return null when no iraqi meals are found`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "barmia",
                 description = "yummy, inexpensive main dish!",
                 tags = listOf("60-minutes-or-less", "meat")
             ),
-            createMeal(
+            createIraqiMeal(
                 name = "coconut bread",
                 description = "found this recipe on a french recipe website.",
                 tags = listOf("low-protein", "cupcakes")
@@ -84,7 +84,7 @@ class GetIraqiMealsUseCaseTest {
     fun `should return iraqi meals when has both iraqi tag and iraq in description`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = listOf("main-dish", "iraqi"),
                 description = "A new iraqi meal"
@@ -102,22 +102,22 @@ class GetIraqiMealsUseCaseTest {
     fun `should return only iraqi meals when multiple (mixed) meals are given`() {
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = listOf("main-dish", "iraqi"),
                 description = "A new iraqi meal"
             ),
-            createMeal(
+            createIraqiMeal(
                 name = "barmia",
                 description = "yummy, inexpensive main dish!",
                 tags = listOf("60-minutes-or-less", "meat")
             ),
-            createMeal(
+            createIraqiMeal(
                 name = "coconut bread",
                 description = "found this recipe on a french recipe website.",
                 tags = listOf("low-protein", "cupcakes")
             ),
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = listOf("main-dish", "iraqi"),
                 description = "A new meal"
@@ -135,7 +135,7 @@ class GetIraqiMealsUseCaseTest {
     fun `should return null when meal is tagged with (iraq) not (iraqi)`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = listOf("main-dish", "iraq"),
                 description = "A new meal"
@@ -165,7 +165,7 @@ class GetIraqiMealsUseCaseTest {
     fun `should return iraqi meals when tags list is empty but has a description contains iraq`() {
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = emptyList(),
                 description = "A new iraqi meal"
@@ -183,7 +183,7 @@ class GetIraqiMealsUseCaseTest {
     fun `should return iraqi meals when description is empty but is tagged with iraqi`() {
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(
+            createIraqiMeal(
                 name = "Pizza",
                 tags = listOf("main-dish", "iraqi"),
                 description = ""
