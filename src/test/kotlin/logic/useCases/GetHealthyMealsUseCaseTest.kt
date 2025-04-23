@@ -57,6 +57,38 @@ class GetHealthyMealsUseCaseTest{
         assertThat(result).isEmpty()
     }
 
+    @Test
+    fun `should ignore null meals in the list`() {
+        val repo = object : MealsRepository {
+            override fun getAllMeals(): List<Meal?> {
+                return listOf(
+                    null,
+                    Meal(
+                        name = "Healthy Salad",
+                        id = 3,
+                        minutes = 12,
+                        contributorId = 125,
+                        submitted = Date(),
+                        tags = listOf("healthy"),
+                        nutritionFacts = NutritionFacts(300f, 5f, 5f, 150f, 20f, 1f, 25f),
+                        steps = listOf("Step 1"),
+                        description = "A healthy salad",
+                        ingredients = listOf("lettuce"),
+                        numberOfIngredients = 1,
+                        numberOfSteps = 1
+                    )
+                )
+            }
+        }
+
+        val useCase = GetHealthyMealsUseCase(repo)
+        val result = useCase.getHealthyFastMeals()
+
+        assertThat(result.size).isEqualTo(1)
+        assertThat(result.first().name).isEqualTo("Healthy Salad")
+    }
+
+
 
     companion object {
         private fun createMeal(
