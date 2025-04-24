@@ -1,10 +1,9 @@
 package com.thechance.di
 
-import com.thechance.presentation.BaseFeatureUi
 import com.thechance.presentation.Feature
-import com.thechance.presentation.IO.ConsoleIO
-import com.thechance.presentation.IO.Printer
-import com.thechance.presentation.IO.Reader
+import com.thechance.presentation.io.ConsoleIO
+import com.thechance.presentation.io.Printer
+import com.thechance.presentation.io.Reader
 import com.thechance.presentation.ui_holder.*
 import org.koin.core.module.dsl.singleOf
 

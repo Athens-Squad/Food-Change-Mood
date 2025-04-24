@@ -3,7 +3,7 @@ package com.thechance.presentation.ui_holder
 import com.thechance.logic.NoMealsWithGivenDateException
 import com.thechance.logic.useCases.SearchFoodByAddDateUseCase
 import com.thechance.presentation.BaseFeatureUi
-import com.thechance.presentation.IO.ConsoleIO
+import com.thechance.presentation.io.ConsoleIO
 import java.text.ParseException
 import java.text.SimpleDateFormat
 

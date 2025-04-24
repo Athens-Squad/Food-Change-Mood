@@ -2,7 +2,7 @@ package com.thechance.presentation.ui_holder
 
 import com.thechance.logic.useCases.IngredientGameUseCase
 import com.thechance.presentation.BaseFeatureUi
-import com.thechance.presentation.IO.ConsoleIO
+import com.thechance.presentation.io.ConsoleIO
 
 class IngredientGameUi(
     private val ingredientGameUseCase: IngredientGameUseCase,

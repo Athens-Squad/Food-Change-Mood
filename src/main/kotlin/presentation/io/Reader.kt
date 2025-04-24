@@ -1,4 +1,4 @@
-package com.thechance.presentation.IO
+package com.thechance.presentation.io
 
 import com.thechance.data.MealsDataException
 

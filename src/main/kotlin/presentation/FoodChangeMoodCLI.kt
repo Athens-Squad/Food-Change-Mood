@@ -1,6 +1,6 @@
 package com.thechance.presentation
 
-import com.thechance.presentation.IO.ConsoleIO
+import com.thechance.presentation.io.ConsoleIO
 
 class FoodChangeMoodCLI(
     private val consoleIO: ConsoleIO,

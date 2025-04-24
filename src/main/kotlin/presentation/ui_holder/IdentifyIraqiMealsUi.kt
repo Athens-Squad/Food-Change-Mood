@@ -2,7 +2,7 @@ package com.thechance.presentation.ui_holder
 
 import com.thechance.logic.useCases.GetIraqiMealsUseCase
 import com.thechance.presentation.BaseFeatureUi
-import com.thechance.presentation.IO.ConsoleIO
+import com.thechance.presentation.io.ConsoleIO
 
 class IdentifyIraqiMealsUi(
     private val getIraqiMealsUseCase: GetIraqiMealsUseCase,

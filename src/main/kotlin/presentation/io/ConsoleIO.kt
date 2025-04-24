@@ -1,4 +1,4 @@
-package com.thechance.presentation.IO
+package com.thechance.presentation.io
 
 data class ConsoleIO (
     val printer: Printer,

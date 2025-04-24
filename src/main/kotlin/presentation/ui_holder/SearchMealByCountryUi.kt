@@ -2,7 +2,7 @@ package com.thechance.presentation.ui_holder
 
 import com.thechance.logic.useCases.SearchByCountryName
 import com.thechance.presentation.BaseFeatureUi
-import com.thechance.presentation.IO.ConsoleIO
+import com.thechance.presentation.io.ConsoleIO
 
 class SearchMealByCountryUi(
     private val searchByCountryName: SearchByCountryName,

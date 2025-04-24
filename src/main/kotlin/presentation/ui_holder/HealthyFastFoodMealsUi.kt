@@ -2,7 +2,7 @@ package com.thechance.presentation.ui_holder
 
 import com.thechance.logic.useCases.GetHealthyMealsUseCase
 import com.thechance.presentation.BaseFeatureUi
-import com.thechance.presentation.IO.ConsoleIO
+import com.thechance.presentation.io.ConsoleIO
 
 class HealthyFastFoodMealsUi(
     private val getHealthyMealsUseCase: GetHealthyMealsUseCase,
@@ -12,8 +12,8 @@ class HealthyFastFoodMealsUi(
 ) : BaseFeatureUi{
     override fun startUi() {
         val healthyMeals = getHealthyMealsUseCase.getHealthyFastMeals()
-        consoleIO.printer.showMessage("Healthy Fast Food Meals (15 minutes or less):")
         if (healthyMeals.isNotEmpty()) {
+            consoleIO.printer.showMessage("Healthy Fast Food Meals (15 minutes or less):")
             healthyMeals.forEach { consoleIO.printer.showMessage(it.name) }
         } else {
             consoleIO.printer.showMessage("No healthy meals found.")

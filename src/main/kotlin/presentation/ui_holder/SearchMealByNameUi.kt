@@ -2,7 +2,7 @@ package com.thechance.presentation.ui_holder
 
 import com.thechance.logic.useCases.mealSearchUseCase.MealSearchUseCase
 import com.thechance.presentation.BaseFeatureUi
-import com.thechance.presentation.IO.ConsoleIO
+import com.thechance.presentation.io.ConsoleIO
 
 class SearchMealByNameUi(
     private val mealSearchUseCase: MealSearchUseCase,
@@ -13,9 +13,14 @@ class SearchMealByNameUi(
     override fun startUi() {
         consoleIO.printer.showMessage("Please Enter the Meal Name: ")
         val searchKeyWord = consoleIO.reader.readStringFromUser()
-        mealSearchUseCase.search(searchKeyWord)
-            .forEach { meal ->
+        val result = mealSearchUseCase.search(searchKeyWord)
+        if (result.isNotEmpty()) {
+            result.forEach { meal ->
                 consoleIO.printer.showMessage(meal.toString())
             }
+        } else{
+            consoleIO.printer.showMessage("No meals found.")
+        }
+
     }
 }
