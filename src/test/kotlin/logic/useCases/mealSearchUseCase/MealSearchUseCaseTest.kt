@@ -31,6 +31,14 @@ class MealSearchUseCaseTest {
         assertEquals(0, results.size)
     }
 
+    @Test
+    fun `search for a substring that appears in multiple meals`() {
+        val results = useCase.search("a")
+        // Meals: Vegan Tacos, Salmon Salad, Banana Pancakes, Chicken Alfredo Pasta, Beef Stir Fry
+        // All contain "a", so all should be returned
+        assertEquals(5, results.size)
+    }
+
 
 
 
