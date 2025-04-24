@@ -25,6 +25,13 @@ class MealSearchUseCaseTest {
         assertEquals("Chicken Alfredo Pasta", results[0].name)
     }
 
+    @Test
+    fun `search is case sensitive and should return no match if casing doesn't match`() {
+        val results = useCase.search("salmon salad") // KMP is case-sensitive by default
+        assertEquals(0, results.size)
+    }
+
+
 
 
 }
