@@ -1,5 +1,7 @@
-package com.thechance.logic.useCases.mealSearchUseCase
+package logic.useCases
 
+import com.thechance.logic.useCases.mealSearchUseCase.KmpSearchStrategy
+import com.thechance.logic.useCases.mealSearchUseCase.MealSearchUseCase
 import fake.FakeMealsRepository
 import org.junit.Assert.assertEquals
 import org.junit.Test
