@@ -39,8 +39,11 @@ class MealSearchUseCaseTest {
         assertEquals(5, results.size)
     }
 
-
-
+    @Test
+    fun `search for a term not found in any meal`() {
+        val results = useCase.search("Pizza")
+        assertEquals(0, results.size)
+    }
 
 }
 
