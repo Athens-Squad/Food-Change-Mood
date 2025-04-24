@@ -59,8 +59,6 @@ class SoThinUseCaseTest {
                             protein = 5.0f,
                             saturatedFat = 1.0f,
                             carbohydrates = 35.0f,
-                            fiber = 3.0,
-                            fat = 10.0
                         ),
                         steps = listOf("Chop vegetables", "Toss in dressing", "Serve"),
                         description = "A light and healthy vegan salad.",
@@ -83,8 +81,6 @@ class SoThinUseCaseTest {
                             protein = 1.0f,
                             saturatedFat = 0.2f,
                             carbohydrates = 35.0f,
-                            fiber = 3.0,
-                            fat = 10.0
                         ),
                         steps = listOf("Cut fruits", "Combine in a bowl", "Serve"),
                         description = "A refreshing fruit bowl for a light snack.",
