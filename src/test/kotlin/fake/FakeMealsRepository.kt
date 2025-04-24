@@ -23,7 +23,9 @@ class FakeMealsRepository: MealsRepository {
                     sodium = 350.0f,
                     protein = 3.0f,
                     saturatedFat = 0.5f,
-                    carbohydrates = 22.0f
+                    carbohydrates = 22.0f,
+                    fiber = 3.0,
+                    fat = 10.0
                 ),
                 steps = listOf("Warm tortillas", "Cook vegetables", "Assemble tacos"),
                 description = "Quick and easy vegan tacos with sautéed vegetables.",
@@ -45,7 +47,9 @@ class FakeMealsRepository: MealsRepository {
                     sodium = 800.0f,
                     protein = 25.0f,
                     saturatedFat = 15.0f,
-                    carbohydrates = 60.0f
+                    carbohydrates = 60.0f,
+                    fiber = 3.0,
+                    fat = 10.0
                 ),
                 steps = listOf("Cook pasta", "Prepare Alfredo sauce", "Cook chicken", "Combine everything"),
                 description = "Creamy chicken Alfredo pasta, perfect for a hearty dinner.",
@@ -67,7 +71,9 @@ class FakeMealsRepository: MealsRepository {
                     sodium = 300.0f,
                     protein = 25.0f,
                     saturatedFat = 3.0f,
-                    carbohydrates = 10.0f
+                    carbohydrates = 10.0f,
+                    fiber = 3.0,
+                    fat = 10.0
                 ),
                 steps = listOf("Grill salmon", "Prepare salad base", "Toss salad with dressing"),
                 description = "A fresh and healthy salmon salad with a tangy vinaigrette.",
@@ -89,7 +95,9 @@ class FakeMealsRepository: MealsRepository {
                     sodium = 900.0f,
                     protein = 30.0f,
                     saturatedFat = 7.0f,
-                    carbohydrates = 30.0f
+                    carbohydrates = 30.0f,
+                    fiber = 3.0,
+                    fat = 10.0
                 ),
                 steps = listOf("Cook beef", "Stir fry vegetables", "Combine beef and veggies"),
                 description = "Quick stir fry with tender beef and colorful vegetables.",
@@ -111,7 +119,9 @@ class FakeMealsRepository: MealsRepository {
                     sodium = 250.0f,
                     protein = 5.0f,
                     saturatedFat = 2.0f,
-                    carbohydrates = 40.0f
+                    carbohydrates = 40.0f,
+                    fiber = 3.0,
+                    fat = 10.0
                 ),
                 steps = listOf("Mash bananas", "Prepare pancake batter", "Cook pancakes", "Serve with syrup"),
                 description = "Fluffy banana pancakes for a delicious breakfast.",

@@ -58,7 +58,9 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
                 sodium = list[NutritionFactsIndexToField.SODIUM],
                 protein = list[NutritionFactsIndexToField.PROTEIN],
                 saturatedFat = list[NutritionFactsIndexToField.SATURATED_FACTS],
-                carbohydrates = list[NutritionFactsIndexToField.CARBOHYDRATES]
+                carbohydrates = list[NutritionFactsIndexToField.CARBOHYDRATES],
+                fiber = 3.0,
+                fat = 10.0
             )
         } catch (mealsDataException: MealsDataException) {
             throw MealsDataException.InvalidNutritionFactsException()
