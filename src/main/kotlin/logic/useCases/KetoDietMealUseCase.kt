@@ -29,14 +29,14 @@ class KetoDietMealUseCase(
     }
 
     private fun isKeto(currentMeal: Meal): Boolean {
-        return (currentMeal.nutritionFacts.carbohydrates.toInt() in MIN_PROTEIN..MAX_PROTEIN)
+        return (currentMeal.nutritionFacts.carbohydrates.toInt() in MIN_CARBS..MAX_CARBS)
                 && currentMeal.nutritionFacts.totalFat > currentMeal.nutritionFacts.protein
                 && currentMeal.nutritionFacts.totalFat > MIN_FATS
     }
 
     companion object{
-        const val MIN_PROTEIN = 15
-        const val MAX_PROTEIN = 20
+        const val MIN_CARBS = 15
+        const val MAX_CARBS = 20
         const val MIN_FATS = 100
     }
 
