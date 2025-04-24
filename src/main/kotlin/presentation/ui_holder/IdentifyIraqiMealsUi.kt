@@ -12,8 +12,8 @@ class IdentifyIraqiMealsUi(
 ) : BaseFeatureUi {
     override fun startUi() {
         val iraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
-        consoleIO.printer.showMessage("Iraqi Meals:")
         if (iraqiMeals.isNotEmpty()) {
+            consoleIO.printer.showMessage("Iraqi Meals:")
             iraqiMeals.forEach { consoleIO.printer.showMessage(it.toString()) }
         } else {
             consoleIO.printer.showMessage("No Iraqi meals found.")

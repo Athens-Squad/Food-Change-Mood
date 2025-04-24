@@ -19,14 +19,24 @@ class MealPrepTimeGuessGameUi(
             val userGuess = consoleIO.reader.readNumberFromUser()
 
             result = mealPrepTimeGuessGameUseCase.playMealGame(userGuess)
-            when (result) {
-                MealGameResult.CORRECT -> consoleIO.printer.showMessage("Correct!")
-                MealGameResult.TOO_LOW -> consoleIO.printer.showMessage("Too low!")
-                MealGameResult.TOO_HIGH -> consoleIO.printer.showMessage("Too high!")
-                MealGameResult.LOST -> consoleIO.printer.showMessage("You've run out of attempts. The correct time was ${currentMeal.minutes} minutes.")
-                MealGameResult.WON -> consoleIO.printer.showMessage("Congratulations! You've won the game.")
-            }
-        } while (result != MealGameResult.CORRECT && result != MealGameResult.LOST)
+            showResultMessage(result, currentMeal.minutes)
+
+        } while (!isGameOver(result))
+    }
+
+    private fun showResultMessage(result: MealGameResult, correctMinutes: Int) {
+        val message = when (result) {
+            MealGameResult.CORRECT -> "Correct!"
+            MealGameResult.TOO_LOW -> "Too low!"
+            MealGameResult.TOO_HIGH -> "Too high!"
+            MealGameResult.LOST -> "You've run out of attempts. The correct time was $correctMinutes minutes."
+            MealGameResult.WON -> "Congratulations! You've won the game."
+        }
+        consoleIO.printer.showMessage(message)
+    }
+
+    private fun isGameOver(result: MealGameResult): Boolean {
+        return result == MealGameResult.CORRECT || result == MealGameResult.LOST || result == MealGameResult.WON
     }
 
 }
