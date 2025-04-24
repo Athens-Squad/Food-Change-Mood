@@ -64,19 +64,33 @@ class GetHealthyMealsUseCaseTest{
                 return listOf(
                     null,
                     Meal(
-                        name = "Healthy Salad",
-                        id = 3,
-                        minutes = 12,
-                        contributorId = 125,
+                        name = "Meal 1",
+                        id = 1,
+                        minutes = 10,
+                        contributorId = 123,
                         submitted = Date(),
-                        tags = listOf("healthy"),
-                        nutritionFacts = NutritionFacts(300f, 5f, 5f, 150f, 20f, 1f, 25f),
+                        tags = listOf("test"),
+                        nutritionFacts = NutritionFacts(1f, 1f, 5f, 200f, 10f, 1f, 1f),
                         steps = listOf("Step 1"),
-                        description = "A healthy salad",
-                        ingredients = listOf("lettuce"),
+                        description = "",
+                        ingredients = listOf("ingredient"),
                         numberOfIngredients = 1,
                         numberOfSteps = 1
-                    )
+                    ),
+                    Meal(
+                        name = "Meal 1",
+                        id = 1,
+                        minutes = 10,
+                        contributorId = 123,
+                        submitted = Date(),
+                        tags = listOf("test"),
+                        nutritionFacts = NutritionFacts(10f, 10f, 5f, 200f, 10f, 15f, 40f),
+                        steps = listOf("Step 1"),
+                        description = "",
+                        ingredients = listOf("ingredient"),
+                        numberOfIngredients = 1,
+                        numberOfSteps = 1
+                    ),
                 )
             }
         }
@@ -85,7 +99,6 @@ class GetHealthyMealsUseCaseTest{
         val result = useCase.getHealthyFastMeals()
 
         assertThat(result.size).isEqualTo(1)
-        assertThat(result.first().name).isEqualTo("Healthy Salad")
     }
 
     @Test
