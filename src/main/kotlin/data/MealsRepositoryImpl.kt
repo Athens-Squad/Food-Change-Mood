@@ -12,7 +12,7 @@ class MealsRepositoryImpl(
     private val logger = Logger.getLogger(MealsRepositoryImpl::class.java.name)
     override fun getAllMeals(): List<Meal?> {
         return try {
-            reader.readMealRecords().map { parser.parseLine(it) }
+            reader.readMealRecords().map { parser.parseRecord(it) }
         } catch (mealsDataException: MealsDataException) {
             logger.warning(mealsDataException.message)
             listOf<Meal>()
