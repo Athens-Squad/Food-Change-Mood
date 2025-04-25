@@ -12,8 +12,8 @@ class SoThinUi(
 ) : BaseFeatureUi {
     override fun startUi() {
         val meal = soThinUseCase.getPlus700Meal()
-        if (meal != null) consoleIO.printer.showMessage("Suggested Meal with more than 700 calories: ${meal.name} - Calories: ${meal.nutritionFacts.calories}")
-        else consoleIO.printer.showMessage("No more meals with more than 700 calories available.")
+        if (meal != null){ consoleIO.printer.showMessage("Suggested Meal with more than 700 calories: ${meal.name} - Calories: ${meal.nutritionFacts.calories}")
+        }else consoleIO.printer.showMessage("No more meals with more than 700 calories available.")
 
     }
 }
