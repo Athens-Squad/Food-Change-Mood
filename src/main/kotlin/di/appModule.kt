@@ -4,6 +4,8 @@ import com.thechance.data.MealsFileParser
 import com.thechance.data.MealsFileReader
 import com.thechance.data.MealsRepositoryImpl
 import com.thechance.logic.MealsRepository
+import com.thechance.logic.useCases.mealSearchUseCase.KmpSearchStrategy
+import com.thechance.logic.useCases.mealSearchUseCase.MealSearchStrategy
 import com.thechance.presentation.FoodChangeMoodCLI
 import org.koin.dsl.module
 import java.io.File
@@ -18,6 +20,8 @@ val appModule = module {
 
     single<MealsRepository> { MealsRepositoryImpl(get(), get()) }
 
+    single<MealSearchStrategy> { KmpSearchStrategy(get()) }
+
     single {
         FoodChangeMoodCLI(
             getHealthyMealsUseCase = get(),
@@ -30,8 +34,11 @@ val appModule = module {
             soThinUseCase = get(),
             getSeaFoodMealsSortedByProteinContent = get(),
             ingredientGameUseCase = get(),
-            getRandomTenMealIncludePotatoUseCase = get()
-
+            getRandomTenMealIncludePotatoUseCase = get(),
+            mealSearchUseCase = get(),
+            getItalianMealsForLargeGroupsUseCase = get(),
+            ketoDietMealUseCase = get(),
+            searchFoodByAddDateUseCase = get()
         )
     }
 }
