@@ -15,7 +15,7 @@ class MealsRepositoryImpl(
 
         return cachedMeals.ifEmpty {
             try {
-                val meals = reader.readMealRecords().map { parser.parseLine(it) }
+                val meals = reader.readMealRecords().map { parser.parseRecord(it) }
                 cachedMeals = meals
                 cachedMeals
             } catch (mealsDataException: MealsDataException) {

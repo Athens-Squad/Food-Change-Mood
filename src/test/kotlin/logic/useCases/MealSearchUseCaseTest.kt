@@ -38,7 +38,7 @@ class MealSearchUseCaseTest {
         val results = useCase.search("a")
         // Meals: Vegan Tacos, Salmon Salad, Banana Pancakes, Chicken Alfredo Pasta, Beef Stir Fry
         // All contain "a", so all should be returned
-        assertEquals(4, results.size)
+        assertEquals(5, results.size)
     }
 
     @Test

@@ -3,7 +3,7 @@ package logic.useCases
 import com.google.common.truth.Truth.assertThat
 import com.thechance.logic.MealsRepository
 import com.thechance.logic.useCases.GetRandomTenMealIncludePotatoUseCase
-import fake.createMeal
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
@@ -22,9 +22,9 @@ class GetRandomTenMealIncludePotatoUseCaseTest{
  @Test
  fun `return only meals that include potato`(){
   // given
-  val mealWithPotato = createMeal("Mashed Potato", listOf("potato", "butter"))
-  val mealWithoutPotato = createMeal("Chicken Salad", listOf("chicken", "lettuce"))
-  val mealWithSweetPotato = createMeal("Sweet Potato Pie", listOf("sweet potato", "sugar"))
+  val mealWithPotato = createMeal("Mashed Potato", ingredients = listOf("potato", "butter"))
+  val mealWithoutPotato = createMeal("Chicken Salad", ingredients =listOf("chicken", "lettuce"))
+  val mealWithSweetPotato = createMeal("Sweet Potato Pie", ingredients =listOf("sweet potato", "sugar"))
   val meals= listOf(mealWithPotato,mealWithoutPotato,mealWithSweetPotato)
 
   every { mealsRepository.getAllMeals() } returns meals
@@ -42,7 +42,7 @@ class GetRandomTenMealIncludePotatoUseCaseTest{
     fun `returns exactly  10 meals `() {
         // given
         val potatoMeals = (1..20).map {
-            createMeal("Meal $it", listOf("potato", "salt"))
+            createMeal("Meal $it", ingredients =listOf("potato", "salt"))
         }
 
         every { mealsRepository.getAllMeals() } returns potatoMeals
@@ -60,8 +60,8 @@ class GetRandomTenMealIncludePotatoUseCaseTest{
     fun `returns empty list when no meals contain potato`() {
         //given
         val meals = listOf(
-            createMeal("Rice", listOf("rice", "salt")),
-            createMeal("Eggs", listOf("eggs", "milk"))
+            createMeal("Rice", ingredients =listOf("rice", "salt")),
+            createMeal("Eggs", ingredients =listOf("eggs", "milk"))
         )
         every { mealsRepository.getAllMeals() } returns meals
         //when
@@ -73,7 +73,7 @@ class GetRandomTenMealIncludePotatoUseCaseTest{
     @Test
     fun `handles Null Meals when  Meal List has an Random Null Meal`() {
         //given
-        val meal = createMeal("Potato Soup", listOf("potato", "cream"))
+        val meal = createMeal("Potato Soup", ingredients =listOf("potato", "cream"))
         every { mealsRepository.getAllMeals() } returns listOf(meal, null, null)
        //when
         val result = useCase.suggestPotatoMeals()

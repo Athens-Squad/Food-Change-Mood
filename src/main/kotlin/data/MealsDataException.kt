@@ -8,4 +8,7 @@ sealed class MealsDataException(message: String): Exception(message) {
     class InvalidNumericFormatException(val str: String): MealsDataException("Invalid numeric format Exception: Cannot parse $str to Int")
 
     class MealsFileReadingException: MealsDataException("Couldn't read the meals from the .csv file")
+    class InvalidDateFormatException : MealsDataException("Invalid date format! Use yyyy-MM-dd.")
+    class NoMealsFoundException: MealsDataException("No meals found")
+
 }

@@ -3,7 +3,7 @@ package presentation.ui_holder
 import com.thechance.logic.useCases.MealPrepTimeGuessGameUseCase
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.MealPrepTimeGuessGameUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -26,7 +26,7 @@ class MealPrepTimeGuessGameUiTest {
     @Test
     fun `should call playMealGame function from mealPrepTimeGuessGameUseCase`() {
         //Given
-        val fakeMeal = createFakeMeal(minutes = CORRECT_MINUTES)
+        val fakeMeal = createMeal(minutes = CORRECT_MINUTES)
         every { mealPrepTimeGuessGameUseCase.getCurrentRandomMeal() } returns fakeMeal
         every { consoleIO.reader.readNumberFromUser() } returns CORRECT_MINUTES
         every { mealPrepTimeGuessGameUseCase.playMealGame(CORRECT_MINUTES) } returns MealGameResult.CORRECT
@@ -42,7 +42,7 @@ class MealPrepTimeGuessGameUiTest {
     @Test
     fun `should play the game and eventually finish when user guesses correctly`() {
         // Given
-        val fakeMeal = createFakeMeal(minutes = CORRECT_MINUTES)
+        val fakeMeal = createMeal(minutes = CORRECT_MINUTES)
         every { mealPrepTimeGuessGameUseCase.getCurrentRandomMeal() } returns fakeMeal
         every { consoleIO.reader.readNumberFromUser() } returnsMany listOf(MIN_WRONG_MINUTES, CORRECT_MINUTES)
         every { mealPrepTimeGuessGameUseCase.playMealGame(MIN_WRONG_MINUTES) } returns MealGameResult.TOO_LOW
@@ -70,7 +70,7 @@ class MealPrepTimeGuessGameUiTest {
     @Test
     fun `should play the game and eventually finish when user loses`() {
         // Given
-        val fakeMeal = createFakeMeal(minutes = CORRECT_MINUTES)
+        val fakeMeal = createMeal(minutes = CORRECT_MINUTES)
         every { mealPrepTimeGuessGameUseCase.getCurrentRandomMeal() } returns fakeMeal
         every { consoleIO.reader.readNumberFromUser() } returnsMany listOf(
             MIN_WRONG_MINUTES,
@@ -110,7 +110,7 @@ class MealPrepTimeGuessGameUiTest {
     @Test
     fun `should show winning message when guess is correct`() {
         // Given
-        val fakeMeal = createFakeMeal(minutes = CORRECT_MINUTES)
+        val fakeMeal = createMeal(minutes = CORRECT_MINUTES)
         every { mealPrepTimeGuessGameUseCase.getCurrentRandomMeal() } returns fakeMeal
         every { consoleIO.reader.readNumberFromUser() } returns CORRECT_MINUTES
         every { mealPrepTimeGuessGameUseCase.playMealGame(CORRECT_MINUTES) }  returns MealGameResult.WON

@@ -3,7 +3,7 @@ package presentation.ui_holder
 import com.thechance.logic.useCases.SearchByCountryName
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.SearchMealByCountryUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,7 +27,7 @@ class SearchMealByCountryUiTest{
     )
     fun `should display meals found for a valid country`(country: String) {
         //given
-        val meals = listOf(createFakeMeal(name = "Mexican Cheese"))
+        val meals = listOf(createMeal(name = "Mexican Cheese"))
 
 
         every { mockkConsoleIO.reader.readStringFromUser() } returns country

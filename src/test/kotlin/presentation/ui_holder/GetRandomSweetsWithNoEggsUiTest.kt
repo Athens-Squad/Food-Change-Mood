@@ -3,7 +3,7 @@ package presentation.ui_holder
 import com.thechance.logic.useCases.GetRandomSweetWithNoEggsUseCase
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.GetRandomSweetsWithNoEggsUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -39,7 +39,7 @@ class GetRandomSweetsWithNoEggsUiTest {
         "-,Invalid Input!"
     )
     fun `should print suitable message for each input`(input: String, expectedThirdMessage: String) {
-        val sweet = createFakeMeal()
+        val sweet = createMeal()
         every { mockUseCase.suggestASweetMeal() } returns sweet andThen null
         every { mockkConsoleIO.reader.readStringFromUser() } returns input
         every { mockkConsoleIO.printer.showMessage(any()) } just Runs
