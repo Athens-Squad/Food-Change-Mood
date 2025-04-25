@@ -3,10 +3,10 @@ package com.thechance.logic.useCases
 import com.thechance.logic.MealsRepository
 import com.thechance.model.Meal
 
-class SuggestFoodUseCase(
+class SuggestEasyMealsUseCase(
     private val mealsRepository: MealsRepository
 ) {
-    fun getMeals(): List<Meal> {
+    fun getEasyMeals(): List<Meal> {
         return mealsRepository.getAllMeals()
             .filterNotNull()
             .filter(::isEasy)

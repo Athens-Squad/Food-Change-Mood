@@ -62,4 +62,3 @@ class SuggestItalianMealsForLargeGroupsUseCaseTest {
         assertThat(result).containsExactly(validMeal)
     }
 }
-
