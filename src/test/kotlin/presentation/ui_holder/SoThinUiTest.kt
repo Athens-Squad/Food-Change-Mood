@@ -8,7 +8,7 @@ import com.thechance.model.NutritionFacts
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.io.Printer
 import com.thechance.presentation.ui_holder.SoThinUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 
@@ -38,10 +38,17 @@ class SoThinUiTest {
     fun `startUi shows suggested meal message when meal is returned  `() {
 
         //given
-        val meal = createFakeMeal(
-            name = "High Calorie Burger",
-            nutritionFacts = NutritionFacts(750f, 1f, 1f, 1f, 1f, 1f, 1f)
-        )
+        val meal =
+            createMeal(
+                name = "High Calorie Burger",
+                nutritionFactCalories = 750f,
+                nutritionFactTotalFat = 1f,
+                nutritionFactSugar = 1f,
+                nutritionFactSodium = 1f,
+                nutritionFactProtein = 1f,
+                nutritionFactSaturatedFat = 1f,
+                nutritionFactCarbohydrates = 1f
+            )
         every { soThinUseCase.getPlus700Meal() } returns meal
 
          //when

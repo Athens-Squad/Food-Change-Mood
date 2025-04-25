@@ -3,7 +3,7 @@ package presentation.ui_holder
 import com.thechance.logic.useCases.KetoDietMealUseCase
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.KetoDietMealUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -39,7 +39,7 @@ class KetoDietMealUiTest {
         "-,Invalid Input!"
     )
     fun `should print suitable message for each input`(input: String, expectedThirdMessage: String) {
-        val ketoMeal = createFakeMeal()
+        val ketoMeal = createMeal()
         every { mockUseCase.suggestKetoMeal() } returns ketoMeal andThen null
         every { mockkConsoleIO.reader.readStringFromUser() } returns input
         every { mockkConsoleIO.printer.showMessage(any()) } just Runs
