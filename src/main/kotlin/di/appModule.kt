@@ -22,23 +22,4 @@ val appModule = module {
 
     single<MealSearchStrategy> { KmpSearchStrategy(get()) }
 
-    single {
-        FoodChangeMoodCLI(
-            getHealthyMealsUseCase = get(),
-            searchByCountryName = get(),
-            getIraqiMealsUseCase = get(),
-            suggestFoodUseCase = get(),
-            guessGameUseCase = get(),
-            getRandomSweetWithNoEggs = get(),
-            gymHelperUseCase = get(),
-            soThinUseCase = get(),
-            getSeaFoodMealsSortedByProteinContent = get(),
-            ingredientGameUseCase = get(),
-            getRandomTenMealIncludePotatoUseCase = get(),
-            mealSearchUseCase = get(),
-            getItalianMealsForLargeGroupsUseCase = get(),
-            ketoDietMealUseCase = get(),
-            searchFoodByAddDateUseCase = get()
-        )
-    }
 }

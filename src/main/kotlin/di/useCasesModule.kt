@@ -11,7 +11,7 @@ import com.thechance.logic.useCases.SoThinUseCase
 import com.thechance.logic.useCases.mealSearchUseCase.MealSearchUseCase
 import com.thechance.logic.useCases.GymHelperUseCase
 
-import com.thechance.logic.useCases.SuggestFoodUseCase
+import com.thechance.logic.useCases.SuggestEasyMealsUseCase
 import com.thechance.logic.useCases.MealPrepTimeGuessGameUseCase
 import com.thechance.logic.useCases.IngredientGameUseCase
 import org.koin.dsl.module
@@ -23,7 +23,7 @@ val useCasesModule = module {
     single { GetHealthyMealsUseCase(get()) }
     single { MealSearchUseCase(get()) }
     single { GetIraqiMealsUseCase(get()) }
-    single { SuggestFoodUseCase(get()) }
+    single { SuggestEasyMealsUseCase(get()) }
     single { SearchByCountryName(get()) }
     single { GetRandomSweetWithNoEggsUseCase(get()) }
     single { GymHelperUseCase(get())}
@@ -32,21 +32,5 @@ val useCasesModule = module {
     single { GetRandomTenMealIncludePotatoUseCase(get()) }
     single { GetItalianMealsForLargeGroupsUseCase(get()) }
     single { SearchFoodByAddDateUseCase(get()) }
-    single { FoodChangeMoodUseCases(
-        getHealthyMealsUseCase = get(),
-        mealSearchUseCase = get(),
-        getItalianMealsForLargeGroupsUseCase = get(),
-        ketoDietMealUseCase = get(),
-        searchFoodByAddDateUseCase = get(),
-        searchByCountryName = get(),
-        getIraqiMealsUseCase = get(),
-        suggestFoodUseCase = get(),
-        guessGameUseCase = get(),
-        getRandomSweetWithNoEggs = get(),
-        gymHelperUseCase = get(),
-        soThinUseCase = get(),
-        getSeaFoodMealsSortedByProteinContent = get(),
-        ingredientGameUseCase = get(),
-        getRandomTenMealIncludePotatoUseCase = get()
-    ) }
+
 }

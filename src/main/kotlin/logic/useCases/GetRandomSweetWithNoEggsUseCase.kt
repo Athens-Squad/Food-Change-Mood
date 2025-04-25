@@ -11,7 +11,7 @@ class GetRandomSweetWithNoEggsUseCase(
     fun suggestASweetMeal(): Meal? {
         return try {
             getSweetMealsWithoutEggsOnly()
-                .takeWhile(::isNotInSeenSweets)
+                .filter(::isNotInSeenSweets)
                 .random()
                 .also { seenSweets.add(it) }
         } catch (e: NoSuchElementException) {
