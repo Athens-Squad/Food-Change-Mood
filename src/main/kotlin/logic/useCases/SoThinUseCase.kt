@@ -13,9 +13,7 @@ class SoThinUseCase(private val repository: MealsRepository) {
             .randomOrNull()
 
         meal?.let {
-            if (!unLikedMeals.contains(it)) {
-                unLikedMeals.add(it)
-            }
+            unLikedMeals.add(it)
         }
 
         return meal
