@@ -5,7 +5,7 @@ import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.io.Printer
 import com.thechance.presentation.ui_holder.GetRandomPotatoMealsUi
 import com.thechance.presentation.ui_holder.SoThinUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verifySequence
@@ -37,8 +37,8 @@ class GetRandomPotatoMealsUiTest {
     fun `startUi when meals are returned should print all potato meals`() {
         //given
         val meals = listOf(
-            createFakeMeal(name = "Potato Curry"),
-            createFakeMeal(name = "Mashed Potatoes")
+            createMeal(name = "Potato Curry"),
+            createMeal(name = "Mashed Potatoes")
         )
 
         every { getRandomTenMealIncludePotatoUseCase.suggestPotatoMeals() } returns meals

@@ -3,7 +3,7 @@ package presentation.ui_holder
 import com.thechance.logic.useCases.mealSearchUseCase.MealSearchUseCase
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.SearchMealByNameUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -48,7 +48,7 @@ class SearchMealByNameUiTest {
     @Test
     fun `should display meals when found in search`() {
         //Given
-        val fakeMeal = createFakeMeal(name = PIZZA)
+        val fakeMeal = createMeal(name = PIZZA)
         every { consoleIO.reader.readStringFromUser() } returns PIZZA
         every { searchMealsUseCase.search(PIZZA) } returns listOf(fakeMeal)
 

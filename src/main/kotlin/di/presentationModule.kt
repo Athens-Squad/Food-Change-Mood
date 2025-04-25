@@ -10,9 +10,10 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val presentationModule = module {
-    single { ConsoleIO(get(),get()) }
     single { Printer() }
     single { Reader() }
+    single { ConsoleIO(get(),get()) }
+
 
     single { GetItalianMealsForLargeGroupsUi(get(),get()) }
     single { GetRandomPotatoMealsUi(get(),get()) }

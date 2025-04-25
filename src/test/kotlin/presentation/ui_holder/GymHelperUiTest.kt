@@ -4,7 +4,7 @@ import com.thechance.logic.useCases.GymHelperUseCase
 import com.thechance.model.NutritionFacts
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.GymHelperUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -27,7 +27,15 @@ class GymHelperUiTest{
     fun `should display matched meals based on user input`() {
         //given
         val meals = listOf(
-            createFakeMeal(nutritionFacts = NutritionFacts(400f, 1f, 1f, 0f, 30f, 1f, 1f))
+            createMeal(
+                nutritionFactCalories = 400f,
+                nutritionFactTotalFat = 1f,
+                nutritionFactSugar = 1f,
+                nutritionFactSodium = 0f,
+                nutritionFactProtein = 30f,
+                nutritionFactSaturatedFat = 1f,
+                nutritionFactCarbohydrates = 1f
+            )
         )
         every { mockUseCase.getMealsByCaloriesAndProtein(400, 30) } returns meals
         every { mockkConsoleIO.reader.readNumberFromUser() } returnsMany listOf(400, 30)

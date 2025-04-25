@@ -3,7 +3,7 @@ package presentation.ui_holder
 import com.thechance.logic.useCases.SuggestEasyMealsUseCase
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.SuggestEasyMealsUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -34,7 +34,7 @@ class SuggestEasyMealsUiTest {
     @Test
     fun `should print the description message and display meal details when startUi function is called and meals are not empty`() {
         //Given
-        val fakeMeal = createFakeMeal()
+        val fakeMeal = createMeal()
         every { suggestFoodUseCase.getEasyMeals() } returns listOf(
             fakeMeal
         )

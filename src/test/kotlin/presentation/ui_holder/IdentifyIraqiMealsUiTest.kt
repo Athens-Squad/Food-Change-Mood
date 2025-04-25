@@ -3,7 +3,7 @@ package presentation.ui_holder
 import com.thechance.logic.useCases.GetIraqiMealsUseCase
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.ui_holder.IdentifyIraqiMealsUi
-import helper.createFakeMeal
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -33,7 +33,7 @@ class IdentifyIraqiMealsUiTest {
     @Test
     fun `should print the description message and display meal details when startUi function is called and meals are not empty`() {
         //Given
-        val fakeMeal = createFakeMeal()
+        val fakeMeal = createMeal()
         every { getIraqiMealsUseCase.getIraqiMeals() } returns listOf(
             fakeMeal
         )

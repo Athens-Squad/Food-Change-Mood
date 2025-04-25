@@ -3,6 +3,7 @@ package logic.useCases
 import com.google.common.truth.Truth.assertThat
 import com.thechance.logic.MealsRepository
 import com.thechance.logic.useCases.MealPrepTimeGuessGameUseCase
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import model.MealGameResult
@@ -20,7 +21,7 @@ class MealPrepTimeGuessGameUseCaseTest {
     fun setUp() {
         mealsRepository = mockk(relaxed = true)
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMeal(mealPrepTime = 30)
+            createMeal(minutes = 30)
         )
         mealPrepTimeGuessGameUseCase = MealPrepTimeGuessGameUseCase(mealsRepository)
     }

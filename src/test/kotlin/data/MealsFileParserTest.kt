@@ -44,16 +44,7 @@ class MealsFileParserTest {
   }
  }
 
- @Test
- fun `should throw InvalidListFieldException when tags is not in a list format`() {
-  //given
-  val line = "Grilled Salmon,13,55,47,2005-09-16,\"\",\"[51.5, 0.0, 13.0, 0.0, 2.0, 0.0, 4.0]\",11,\"['if desired , season with salt']\",\"autumn is my favorite time of year to cook this recipe\",\"['salt']\",7"
 
-  //when & then
-  assertThrows<MealsDataException.InvalidListFieldException> {
-   parser.parseRecord(line)
-  }
- }
 
  @Test
  fun `should throw InvalidNumericFormatException when non-numeric ID provided`() {

@@ -3,6 +3,7 @@ package logic.useCases
 import com.google.common.truth.Truth.assertThat
 import com.thechance.logic.MealsRepository
 import com.thechance.logic.useCases.GetRandomSweetWithNoEggsUseCase
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
@@ -26,12 +27,12 @@ class GetRandomSweetWithNoEggsUseCaseTest {
         every { mealsRepository.getAllMeals() } returns listOf(
             createMeal(
                 "Baghrir Moroccan sweets",
-                mealDescription = "",
+                description = "",
                 ingredients = emptyList()
             ),
             createMeal(
                 "Kebab meat",
-                mealDescription = "",
+                description = "",
                 ingredients = emptyList()
             )
         )
@@ -49,12 +50,12 @@ class GetRandomSweetWithNoEggsUseCaseTest {
         every { mealsRepository.getAllMeals() } returns listOf(
             createMeal(
                 "Pancake",
-                mealDescription = "Yummy sweets",
+                description = "Yummy sweets",
                 ingredients = emptyList()
             ),
             createMeal(
                 "Kebab meat",
-                mealDescription = "",
+                description = "",
                 ingredients = emptyList()
             )
         )
@@ -72,12 +73,12 @@ class GetRandomSweetWithNoEggsUseCaseTest {
         every { mealsRepository.getAllMeals() } returns listOf(
             createMeal(
                 "Cookies sweets",
-                mealDescription = "",
+                description = "",
                 ingredients = listOf("flour", "eggs", "sugar")
             ),
             createMeal(
                 "Sweets Cake",
-                mealDescription = "",
+                description = "",
                 ingredients = listOf("flour", "milk", "sugar")
             )
         )
@@ -95,12 +96,12 @@ class GetRandomSweetWithNoEggsUseCaseTest {
         every { mealsRepository.getAllMeals() } returns listOf(
             createMeal(
                 "Cookies sweets",
-                mealDescription = "",
+                description = "",
                 ingredients = emptyList()
             ),
             createMeal(
                 "Kebab Meat",
-                mealDescription = "",
+                description = "",
                 ingredients = emptyList()
             )
         )
@@ -120,12 +121,12 @@ class GetRandomSweetWithNoEggsUseCaseTest {
         every { mealsRepository.getAllMeals() } returns listOf(
             createMeal(
                 "Cookies sweets",
-                mealDescription = "",
+                description = "",
                 ingredients = listOf("flour", "eggs", "sugar")
             ),
             createMeal(
                 "Kebab Meat",
-                mealDescription = "",
+                description = "",
                 ingredients = emptyList()
             )
         )

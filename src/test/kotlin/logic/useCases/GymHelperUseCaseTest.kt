@@ -3,7 +3,7 @@ package logic.useCases
 import com.thechance.logic.MealsRepository
 import com.thechance.logic.useCases.GymHelperUseCase
 import com.google.common.truth.Truth.assertThat
-import helper.createMealForGymHelper
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
@@ -23,11 +23,11 @@ class GymHelperUseCaseTest {
     @Test
     fun `should return meals matching exact calories and protein`() {
         // Given
-        val matchingMeal = createMealForGymHelper(calories = 400f, protein = 30f)
+        val matchingMeal = createMeal(nutritionFactCalories = 400f, nutritionFactProtein = 30f)
         every { mealsRepository.getAllMeals() } returns listOf(
             matchingMeal,
-            createMealForGymHelper(calories = 500f, protein = 30f),
-            createMealForGymHelper(calories = 400f, protein = 20f)
+            createMeal(nutritionFactCalories = 500f, nutritionFactProtein = 30f),
+            createMeal(nutritionFactCalories = 400f, nutritionFactProtein = 20f),
         )
 
         // When
@@ -41,8 +41,8 @@ class GymHelperUseCaseTest {
     fun `should return empty list when no meals match the criteria`() {
         // Given
         every { mealsRepository.getAllMeals() } returns listOf(
-            createMealForGymHelper(calories = 200f, protein = 10f),
-            createMealForGymHelper(calories = 350f, protein = 25f)
+            createMeal(nutritionFactCalories = 200f, nutritionFactProtein = 10f),
+            createMeal(nutritionFactCalories = 350f, nutritionFactProtein = 25f),
         )
 
         // When

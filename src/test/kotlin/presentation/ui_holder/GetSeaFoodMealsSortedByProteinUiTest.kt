@@ -1,18 +1,13 @@
 package presentation.ui_holder
 
 import com.thechance.logic.useCases.GetSeaFoodMealsSortedByProteinContent
-import com.thechance.model.NutritionFacts
 import com.thechance.model.ProteinMeal
 import com.thechance.presentation.io.ConsoleIO
 import com.thechance.presentation.io.Printer
 import com.thechance.presentation.ui_holder.GetSeaFoodMealsSortedByProteinUi
-import com.thechance.presentation.ui_holder.SoThinUi
-import helper.createFakeMeal
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import io.mockk.verifySequence
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
