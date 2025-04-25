@@ -5,10 +5,11 @@ import com.thechance.model.Meal
 import com.thechance.model.NutritionFacts
 import java.text.SimpleDateFormat
 
-class FakeMealsRepository: MealsRepository {
+open class FakeMealsRepository: MealsRepository {
     override fun getAllMeals(): List<Meal?> {
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         return listOf(
+            null,
             Meal(
                 name = "Vegan Tacos",
                 id = 101,
@@ -59,7 +60,7 @@ class FakeMealsRepository: MealsRepository {
                 minutes = 20,
                 contributorId = 2003,
                 submitted = sdf.parse("2021-08-30"),
-                tags = listOf("healthy", "fish", "salad"),
+                tags = listOf("healthy", "fish", "salad", "seafood"),
                 nutritionFacts = NutritionFacts(
                     calories = 2050.0f,
                     totalFat = 20.0f,
@@ -118,6 +119,50 @@ class FakeMealsRepository: MealsRepository {
                 ingredients = listOf("bananas", "flour", "milk", "eggs", "maple syrup"),
                 numberOfIngredients = 5,
                 numberOfSteps = 4
+            ),
+            Meal(
+                name = "Grilled Shrimp",
+                id = 106,
+                minutes = 25,
+                contributorId = 2006,
+                submitted = sdf.parse("2023-05-05"),
+                tags = listOf("seafood", "shrimp", "grill"),
+                nutritionFacts = NutritionFacts(
+                    calories = 300.0f,
+                    totalFat = 6.0f,
+                    sugar = 0.0f,
+                    sodium = 400.0f,
+                    protein = 28.0f,
+                    saturatedFat = 1.0f,
+                    carbohydrates = 5.0f
+                ),
+                steps = listOf("Marinate shrimp", "Grill shrimp", "Serve with sauce"),
+                description = "Juicy grilled shrimp with a smoky flavor.",
+                ingredients = listOf("shrimp", "olive oil", "garlic", "lemon juice"),
+                numberOfIngredients = 4,
+                numberOfSteps = 3
+            ),
+            Meal(
+                name = "Seafood Paella",
+                id = 107,
+                minutes = 50,
+                contributorId = 2007,
+                submitted = sdf.parse("2023-07-20"),
+                tags = listOf("seafood", "rice", "paella"),
+                nutritionFacts = NutritionFacts(
+                    calories = 700.0f,
+                    totalFat = 18.0f,
+                    sugar = 2.0f,
+                    sodium = 600.0f,
+                    protein = 35.0f,
+                    saturatedFat = 5.0f,
+                    carbohydrates = 60.0f
+                ),
+                steps = listOf("Cook rice", "Add seafood", "Simmer everything"),
+                description = "Classic Spanish paella packed with seafood and spices.",
+                ingredients = listOf("rice", "shrimp", "mussels", "peas", "saffron"),
+                numberOfIngredients = 5,
+                numberOfSteps = 3
             )
         )
     }
