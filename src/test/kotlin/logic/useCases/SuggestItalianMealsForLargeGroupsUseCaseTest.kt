@@ -1,31 +1,30 @@
-package com.thechance.test.useCases
+package logic.useCases
 import com.google.common.truth.Truth.assertThat
-import logic.MealsRepository
-import logic.use_case.SuggestItalianMealsForLargeGroupsUseCase
-import fake.createMeal
+import com.thechance.logic.MealsRepository
+import com.thechance.logic.useCases.GetItalianMealsForLargeGroupsUseCase
+import helper.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.koin.dsl.module
 
 
 class SuggestItalianMealsForLargeGroupsUseCaseTest {
 
     private lateinit var mealsRepository: MealsRepository
-    private lateinit var useCase: SuggestItalianMealsForLargeGroupsUseCase
+    private lateinit var useCase: GetItalianMealsForLargeGroupsUseCase
 
     @BeforeEach
     fun setUp() {
         mealsRepository = mockk()
-        useCase = SuggestItalianMealsForLargeGroupsUseCase(mealsRepository)
+        useCase = GetItalianMealsForLargeGroupsUseCase(mealsRepository)
     }
 
     @Test
     fun `returns only Italian meals for large groups`() {
         // given
-        val italianMeal = createMeal("Pasta", tags = listOf("for-large-groups", "itali"))
-        val italianInDescription = createMeal("Pizza", tags = listOf("dinner"), description = "classic Itali dish")
+        val italianMeal = createMeal("Pasta", tags = listOf("for-large-groups", "italian"))
+        val italianInDescription = createMeal("Pizza", tags = listOf("for-large-groups"), description = "classic italian dish")
         val unrelatedMeal = createMeal("Burger", tags = listOf("fast food"))
 
         every { mealsRepository.getAllMeals() } returns listOf(italianMeal, italianInDescription, unrelatedMeal)
@@ -53,7 +52,7 @@ class SuggestItalianMealsForLargeGroupsUseCaseTest {
     @Test
     fun `ignores null meals safely`() {
         // given
-        val validMeal = createMeal("Lasagna", tags = listOf("for-large-groups", "itali"))
+        val validMeal = createMeal("Lasagna", tags = listOf("for-large-groups", "italian"))
         every { mealsRepository.getAllMeals() } returns listOf(validMeal, null, null)
 
         // when
@@ -63,3 +62,4 @@ class SuggestItalianMealsForLargeGroupsUseCaseTest {
         assertThat(result).containsExactly(validMeal)
     }
 }
+

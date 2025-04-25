@@ -1,6 +1,7 @@
-package com.thechance.test.fake
-import model.Meal
-import model.NutritionFacts
+package helper
+import com.thechance.model.Meal
+import com.thechance.model.NutritionFacts
+import java.util.*
 
 fun createMeal(
     name: String = "Meal",
@@ -11,14 +12,14 @@ fun createMeal(
     return Meal(
         id = 1,
         name = name,
-        description = description,
+        description = description.toString(),
         tags = tags,
         steps = listOf("step1"),
-        nutritionFacts = NutritionFacts(100, 10, 5, 300, 20, 3, 50),
+        nutritionFacts = NutritionFacts(100f, 10f, 5f, 300f, 20f, 3f, 50f),
         numberOfIngredients = ingredients.size,
         numberOfSteps = 1,
         ingredients = ingredients,
-        submitted = "2023-01-01",
+        submitted = Date(),
         contributorId = 1,
         minutes = 20
     )
