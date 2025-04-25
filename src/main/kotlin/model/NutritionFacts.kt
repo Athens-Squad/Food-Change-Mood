@@ -7,5 +7,5 @@ data class NutritionFacts(
     val sodium: Float,
     val protein: Float,
     val saturatedFat: Float,
-    val carbohydrates: Float
+    val carbohydrates: Float,
 )

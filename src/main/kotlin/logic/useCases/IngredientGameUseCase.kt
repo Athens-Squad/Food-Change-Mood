@@ -21,7 +21,7 @@ class IngredientGameUseCase(private val mealsRepository: MealsRepository) {
 
     fun guessIngredient(): Triple<String, List<String>, String>? {
 
-        if (isGameOver()) return null
+       if (isGameOver()) return null
         val meal = meals.removeFirst()
 
         correctIngredient = meal.ingredients.random()

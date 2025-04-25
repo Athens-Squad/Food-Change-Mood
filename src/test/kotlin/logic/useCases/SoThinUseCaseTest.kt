@@ -41,7 +41,7 @@ class SoThinUseCaseTest {
     @Test
     fun `should return null when no meals have greater than 700 calories`() {
         //given
-        val fakeMealsRepository = object : MealsRepository {
+        val fakeMealsRepository = object : FakeMealsRepository() {
             override fun getAllMeals(): List<Meal?> {
                 return listOf(
                     Meal(
@@ -58,7 +58,7 @@ class SoThinUseCaseTest {
                             sodium = 200.0f,
                             protein = 5.0f,
                             saturatedFat = 1.0f,
-                            carbohydrates = 35.0f
+                            carbohydrates = 35.0f,
                         ),
                         steps = listOf("Chop vegetables", "Toss in dressing", "Serve"),
                         description = "A light and healthy vegan salad.",
@@ -80,7 +80,7 @@ class SoThinUseCaseTest {
                             sodium = 0.0f,
                             protein = 1.0f,
                             saturatedFat = 0.2f,
-                            carbohydrates = 35.0f
+                            carbohydrates = 35.0f,
                         ),
                         steps = listOf("Cut fruits", "Combine in a bowl", "Serve"),
                         description = "A refreshing fruit bowl for a light snack.",
