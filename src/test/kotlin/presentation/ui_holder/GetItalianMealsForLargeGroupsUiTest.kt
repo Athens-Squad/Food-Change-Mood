@@ -33,14 +33,18 @@ class GetItalianMealsForLargeGroupsUiTest{
 
     @Test
     fun `startUi should print all meals when meals are returned `() {
+        //given
         val meal1 = createFakeMeal(name = "Italian Pasta Feast")
         val meal2 = createFakeMeal(name = "Massive Lasagna")
         val meals = listOf(meal1, meal2)
 
         every { getItalianMealsForLargeGroupsUseCase.suggestItalianMealsForLargeGroups() } returns meals
 
+
+        //when
         getItalianMealsForLargeGroupsUi.startUi()
 
+        //then
         verifySequence {
             printer.showMessage(meal1.toString())
             printer.showMessage(meal2.toString())

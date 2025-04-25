@@ -36,14 +36,18 @@ class SoThinUiTest {
 
     @Test
     fun `startUi shows suggested meal message when meal is returned  `() {
+
+        //given
         val meal = createFakeMeal(
             name = "High Calorie Burger",
             nutritionFacts = NutritionFacts(750f, 1f, 1f, 1f, 1f, 1f, 1f)
         )
         every { soThinUseCase.getPlus700Meal() } returns meal
 
+         //when
         soThinUi.startUi()
 
+          //then
         verify {
             printer.showMessage("Suggested Meal with more than 700 calories: High Calorie Burger - Calories: 750.0")
         }
@@ -51,10 +55,11 @@ class SoThinUiTest {
 
     @Test
     fun `startUi show no meal available message when meal is null  `() {
+        //given
         every { soThinUseCase.getPlus700Meal() } returns null
-
+        //when
         soThinUi.startUi()
-
+          //then
         verify {
             printer.showMessage("No more meals with more than 700 calories available.")
         }

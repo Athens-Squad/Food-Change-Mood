@@ -37,13 +37,17 @@ class GetSeaFoodMealsSortedByProteinUiTest {
 
   @Test
     fun `startUi  print meals sorted by protein when  seafood meals are founded `() {
+        //given
         val meal1 = ProteinMeal( rank = 1, name = "Grilled Salmon",35.5f)
         val meal2 = ProteinMeal(rank = 2,"Tuna Steak",30.0f)
         val meals= listOf(meal1,meal2)
 
         every { getSeaFoodMealsSortedByProteinContent.getSeaFoodMealsSortedByProteinContent() } returns meals
 
+      //when
          getSeaFoodMealsSortedByProteinUi.startUi()
+
+      //then
       verifySequence {
           printer.showMessage("Seafood Meals Sorted by Protein Content:")
           printer.showMessage("${meal1.rank}: ${meal1.name} - Protein: ${meal1.proteinAmount}g")

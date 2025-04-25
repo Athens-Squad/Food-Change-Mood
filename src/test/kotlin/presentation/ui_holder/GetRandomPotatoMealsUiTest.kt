@@ -35,6 +35,7 @@ class GetRandomPotatoMealsUiTest {
 
     @Test
     fun `startUi when meals are returned should print all potato meals`() {
+        //given
         val meals = listOf(
             createFakeMeal(name = "Potato Curry"),
             createFakeMeal(name = "Mashed Potatoes")
@@ -42,8 +43,10 @@ class GetRandomPotatoMealsUiTest {
 
         every { getRandomTenMealIncludePotatoUseCase.suggestPotatoMeals() } returns meals
 
+        //when
         getRandomPotatoMealsUi.startUi()
 
+         //then
         verifySequence {
             printer.showMessage("Here are 10 meals that include potatoes:")
             printer.showMessage("1: ${meals[0]}")
@@ -54,10 +57,11 @@ class GetRandomPotatoMealsUiTest {
 
     @Test
     fun `startUi when no meals returned should print no potato meals message`() {
+        //given
         every { getRandomTenMealIncludePotatoUseCase.suggestPotatoMeals() } returns emptyList()
-
+           //when
         getRandomPotatoMealsUi.startUi()
-
+         //then
         verifySequence {
             printer.showMessage("Here are 10 meals that include potatoes:")
             printer.showMessage("No potato meals found.")
