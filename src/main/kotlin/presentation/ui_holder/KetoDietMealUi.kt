@@ -1,6 +1,7 @@
 package com.thechance.presentation.ui_holder
 
 import com.thechance.logic.useCases.KetoDietMealUseCase
+import com.thechance.model.Meal
 import com.thechance.presentation.BaseFeatureUi
 import com.thechance.presentation.io.ConsoleIO
 
@@ -12,20 +13,30 @@ class KetoDietMealUi(
 ): BaseFeatureUi {
     override fun startUi() {
         val ketoMeal = ketoDietMealUseCase.suggestKetoMeal()
-        if (ketoMeal != null) {
-            consoleIO.printer.showMessage("Suggested Keto Meal: ${ketoMeal.name} - ${ketoMeal.description}")
-            consoleIO.printer.showMessage("Would you like to see more details for ${ketoMeal.name}? (yes/no)")
 
-            val userInput = consoleIO.reader.readStringFromUser().trim()
-            if (userInput.equals("yes", ignoreCase = true)) {
-                consoleIO.printer.showMessage("Details: $ketoMeal")
-            } else if (userInput.equals("No", ignoreCase = true)) {
-                startUi()
-            } else {
-                consoleIO.printer.showMessage("Invalid Input!")
-            }
-        } else {
+        if (ketoMeal == null) {
             consoleIO.printer.showMessage("No more Keto Diet Meals Available.")
+            return
         }
+
+        showSuggestion(ketoMeal)
+
+        val userInput = consoleIO.reader.readStringFromUser().trim().lowercase()
+
+        handleUserInput(userInput, ketoMeal)
+
+    }
+
+    private fun handleUserInput(userInput: String, ketoMeal: Meal) {
+        when(userInput) {
+            "yes" -> consoleIO.printer.showMessage("Details: $ketoMeal")
+            "no" -> startUi()
+            else -> consoleIO.printer.showMessage("Invalid Input!")
+        }
+    }
+
+    private fun showSuggestion(ketoMeal: Meal) {
+        consoleIO.printer.showMessage("Suggested Keto Meal: ${ketoMeal.name} - ${ketoMeal.description}")
+        consoleIO.printer.showMessage("Would you like to see more details for ${ketoMeal.name}? (yes/no)")
     }
 }

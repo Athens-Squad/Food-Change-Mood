@@ -62,7 +62,7 @@ class IdentifyIraqiMealsUiTest {
         verify(
             exactly = 1
         ) {
-            consoleIO.printer.showMessage("No meals available.")
+            consoleIO.printer.showMessage("No Iraqi meals found.")
         }
     }
 }
