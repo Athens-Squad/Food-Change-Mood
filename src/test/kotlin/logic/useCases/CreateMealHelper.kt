@@ -6,11 +6,13 @@ import java.time.Instant
 import java.util.Date
 
 fun createMeal(
-    mealPrepTime: Int
+    mealName: String,
+    mealDescription: String,
+    ingredients: List<String>
 ) = Meal(
-    name = "",
+    name = mealName,
     id = 0,
-    minutes = mealPrepTime,
+    minutes = 0,
     contributorId = 0,
     submitted = Date.from(Instant.now()),
     tags = emptyList(),
@@ -25,7 +27,7 @@ fun createMeal(
     ),
     numberOfSteps = 0,
     steps = emptyList(),
-    description = "Meal Description",
-    ingredients = emptyList(),
+    description = mealDescription,
+    ingredients = ingredients,
     numberOfIngredients = 0
 )
