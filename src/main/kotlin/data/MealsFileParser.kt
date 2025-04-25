@@ -4,7 +4,6 @@ import com.thechance.model.Meal
 import com.thechance.model.MealIndexToField
 import com.thechance.model.NutritionFacts
 import com.thechance.model.NutritionFactsIndexToField
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,9 +41,6 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
         }
     }
 
-    private fun parseDate(stringDate: String): Date {
-        return dateFormat.parse(stringDate)
-    }
 
     private fun parseList(listOfStrings: String): List<String> { // takes the list as string and parse it to list of strings
         val list = listOfStrings
@@ -54,8 +50,16 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
             .split("', '")
             .map { it.trim().removeSurrounding("'") }  // Remove any surrounding quotes around individual items
             .filter { it.isNotEmpty() }
-        if (list.isEmpty()) throw MealsDataException.InvalidListFieldException()
-        return list
+        return try {
+            if (list.isEmpty()) throw MealsDataException.InvalidListFieldException()
+            list
+        } catch (e: MealsDataException) {
+            emptyList<String>()
+        }
+    }
+
+    private fun parseDate(stringDate: String): Date {
+        return dateFormat.parse(stringDate)
     }
 
     private fun parseNutritionFacts(listOfNutritionFacts: String): NutritionFacts { //takes list of nutrition facts as a string and parse it to a NutritionFacts instance
@@ -81,25 +85,29 @@ class MealsFileParser(private val dateFormat: SimpleDateFormat) {
 
 
         var i = 0
-        while (i < line.length) {
-            val char = line[i]
-            when {
-                char == '"' -> {
-                    inDoubleQuotes = !inDoubleQuotes
-                }
+        try {
+            while (i < line.length) {
+                val char = line[i]
+                when {
+                    char == '"' -> {
+                        inDoubleQuotes = !inDoubleQuotes
+                    }
 
-                char == ',' && !inDoubleQuotes -> {
-                    fields.add(current.trim())
-                    current = ""
-                }
+                    char == ',' && !inDoubleQuotes -> {
+                        fields.add(current.trim())
+                        current = ""
+                    }
 
-                else -> {
-                    current += char
+                    else -> {
+                        current += char
+                    }
                 }
+                i++
             }
-            i++
+            fields.add(current.trim())
+        } catch (mealsDataException: MealsDataException) {
+            throw MealsDataException.InvalidMealRecordFormatException()
         }
-        fields.add(current.trim())
         return fields.map { it.trim() }
     }
 

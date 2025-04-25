@@ -31,8 +31,6 @@ val presentationModule = module {
     single { SoThinUi(get(),get()) }
     single { SuggestEasyMealsUi(get(),get()) }
 
-//    singleOf(::Feature)
-
-    single { Feature(get(),get(),get(),get(),get(),get(),get(),get(),get(),get(),get(),get(),get(),get(),get()) }
+    singleOf(::Feature)
 
 }

@@ -10,11 +10,13 @@ class FoodChangeMoodCLI(
         while (true) {
             displayOptions()
             val userInputOption = consoleIO.reader.readNumberFromUser()
-            mapInputToFeature(userInputOption)
+            if (!mapInputToFeature(userInputOption)) {
+                break
+            }
         }
     }
 
-    private fun mapInputToFeature(option: Int) {
+    private fun mapInputToFeature(option: Int): Boolean {
         foodChangeMoodFeatureUi.apply {
             features.forEach { featureUi ->
                 if (featureUi.featureNumber == option) {
@@ -23,11 +25,12 @@ class FoodChangeMoodCLI(
             }
             if (option == 0) {
                 consoleIO.printer.showMessage("Exiting the app. Goodbye!")
-                return
+                return false
             } else {
                 consoleIO.printer.showMessage("Invalid option. Please choose again.")
             }
         }
+        return true
     }
 
 
@@ -36,6 +39,8 @@ class FoodChangeMoodCLI(
             .sortedBy { it.featureNumber }
             .forEach { featureUi ->
             featureUi.printUiMessage()
-        }
+        }.also {
+            consoleIO.printer.showMessage("0 : Exit the App")
+            }
     }
 }
